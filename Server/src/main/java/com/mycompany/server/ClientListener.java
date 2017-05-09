@@ -5,6 +5,12 @@
  */
 package com.mycompany.server;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+
+
 /**
  *
  * @author Suzana
@@ -12,14 +18,75 @@ package com.mycompany.server;
 public class ClientListener implements Runnable 
 {
     
+    static private ClientListener instance;
+    static public ClientListener getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new ClientListener();
+        }
+        return instance;
+    }
+    
+    private ClientListener()
+    {
+        handlers = new ArrayList<>();
+        workerThread = new Thread(this);
+    }
     
     
     
+    private ServerSocket srvSocket;
+    public void Init() throws IOException
+    {
+        srvSocket = new ServerSocket(45000);
+    }
+    
+    
+    
+   
+    
+    private ArrayList<ClientEvents> handlers;
+    
+    public void addEventHandler(ClientEvents handler)
+    {
+        handlers.add(handler);
+    }
+    
+    public void removeEventHandler(ClientEvents handler)
+    {
+        handlers.remove(handler);
+    }
+    
+    
+    
+    private Thread workerThread;
+    
+    public void start()
+    {
+        workerThread.start();
+    }
     
     @Override 
     public void run()
     {
-       
+       while (true)
+       {
+            try 
+            {
+                Socket clientSocket = srvSocket.accept();
+                
+                for (ClientEvents handler : handlers)
+                {   
+                    handler.NewClientConnection(clientSocket);
+                }
+            } 
+            catch (IOException ex) 
+            {
+                ex.getMessage();
+            }
+           
+       }
     }
     
 }

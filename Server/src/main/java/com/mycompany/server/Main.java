@@ -5,16 +5,28 @@
  */
 package com.mycompany.server;
 
+import java.net.Socket;
+
 /**
  *
  * @author Suzana
  */
-public class Main // asta o sa fie clasa noastra main :D 
+public class Main
 {
-    // fa tu, si numeste-o ClientListener 
+   
     public static void main(String args[])
     {
-        System.out.println("ceva");
+        Server serverInstance = Server.getInstance();
+        ClientListener clInstance = ClientListener.getInstance();
+        clInstance.addEventHandler(serverInstance);
+        
+        clInstance.start();
     }
+    
+    
+    
+    
+   
+    
     
 }
