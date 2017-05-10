@@ -5,6 +5,7 @@
  */
 package com.mycompany.server;
 
+import java.util.ArrayDeque;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,8 @@ import java.util.logging.Logger;
  */
 public class MessageHandler implements Runnable
 {
+    
+    
     static private MessageHandler instance;
     static public MessageHandler getInstance()
     {
@@ -29,6 +32,20 @@ public class MessageHandler implements Runnable
     {
         semaphore = new Semaphore(0);
         workerThread = new Thread(this);
+        taskQueue = new ArrayDeque();
+    }
+    
+    
+    private ArrayDeque<MessageTask> taskQueue;
+    
+    public synchronized void addMessageTask(MessageTask task)
+    {
+        taskQueue.addLast(task);
+    }
+    
+    public synchronized MessageTask getTask()
+    {
+        return taskQueue.poll();
     }
     
     
@@ -38,10 +55,6 @@ public class MessageHandler implements Runnable
     {
         semaphore.release();
     }
-    
-    
-    
-    
     
     
     
@@ -61,7 +74,11 @@ public class MessageHandler implements Runnable
             try 
             {
                 semaphore.acquire();
-                System.out.println("Message handler: Semaphore aquired!!");
+                MessageTask task = getTask();
+                if (task != null)
+                {
+                    task.processMessage();
+                }
             } 
             catch (InterruptedException ex) 
             {
