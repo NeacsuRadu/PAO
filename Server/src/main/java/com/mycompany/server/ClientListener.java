@@ -9,12 +9,17 @@ package com.mycompany.server;
  *
  * @author Suzana
  */
-public class Main // asta o sa fie clasa noastra main :D 
+public class ClientListener implements Runnable 
 {
-    // fa tu, si numeste-o ClientListener 
-    public static void main(String args[])
+    
+    
+    
+    
+    
+    @Override 
+    public void run()
     {
-        System.out.println("ceva");
+       
     }
     
 }
