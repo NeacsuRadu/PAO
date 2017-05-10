@@ -14,5 +14,4 @@ import java.net.Socket;
 public interface ClientEvents 
 {
     public void NewClientConnection(Socket clientSocket);
-    public void NewClientMessage(String message);
 }

@@ -32,13 +32,7 @@ public class Server implements ClientEvents
     @Override
     public void NewClientConnection(Socket clientSocket)
     {
-        System.out.println("ceva");
-    }
-    
-    @Override
-    public void NewClientMessage(String message)
-    {
-        System.out.println(message);
+        MessageHandler.getInstance().releaseSemaphore();
     }
     
 }

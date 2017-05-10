@@ -37,9 +37,16 @@ public class ClientListener implements Runnable
     
     
     private ServerSocket srvSocket;
-    public void Init() throws IOException
+    public void Init() 
     {
-        srvSocket = new ServerSocket(45000);
+        try
+        {
+            srvSocket = new ServerSocket(45000);
+        }
+        catch(IOException ex)
+        {
+            System.out.println("Client listener init ex: " + ex.getMessage());
+        }
     }
     
     
