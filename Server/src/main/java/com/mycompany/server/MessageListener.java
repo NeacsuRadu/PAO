@@ -7,6 +7,8 @@ package com.mycompany.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,13 +18,14 @@ import java.util.logging.Logger;
  */
 public class MessageListener implements Runnable
 {
-    private BufferedReader socketReader;
+    private Scanner socketReader;
     private MessageHandler messageHandler;
     
-    public MessageListener(BufferedReader buff)
+    public MessageListener(Scanner buff)
     {
         socketReader = buff;
         messageHandler = MessageHandler.getInstance();
+        workerThread = new Thread(this);
     }
     
     
@@ -39,22 +42,14 @@ public class MessageListener implements Runnable
         String line;
         while (true)
         {
-            try 
+            line = socketReader.nextLine();
+            if(line == null)
             {
-                line = socketReader.readLine();
-                if(line == null)
-                {
-                    System.out.println("Connection closed !!!");
-                    break;
-                }
-                messageHandler.addMessageTask(new MessageTask(line));
-                messageHandler.releaseSemaphore();
-            } 
-            catch (IOException ex)
-            {
-                Logger.getLogger(MessageListener.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Connection closed !!! Close the fucking socket !!");
+                break;
             }
+            messageHandler.addMessageTask(new MessageTask(line));
+            messageHandler.releaseSemaphore();
         }
-    }
-    
+    }   
 }

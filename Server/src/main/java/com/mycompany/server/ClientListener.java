@@ -77,12 +77,14 @@ public class ClientListener implements Runnable
     @Override 
     public void run()
     {
+        System.out.println("Client listener, run method started.");
        while (true)
        {
             try 
             {
+                System.out.println("Client listener, waiting for new client connection.");
                 Socket clientSocket = srvSocket.accept();
-                
+                System.out.println("Client listener, new client connection.");
                 for (ClientEvents handler : handlers)
                 {   
                     handler.NewClientConnection(clientSocket);

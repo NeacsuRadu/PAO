@@ -16,16 +16,16 @@ public class Main
    
     public static void main(String args[])
     {
-        MessageHandler msgInstance = MessageHandler.getInstance();
-        msgInstance.start();
+        MessageHandler             msgHandler = MessageHandler.getInstance();
+        Server                     server = Server.getInstance();
+        ClientListener             clientListener = ClientListener.getInstance();
         
+        clientListener.addEventHandler(server);
+        clientListener.Init();
         
-        Server serverInstance = Server.getInstance();
-        ClientListener clInstance = ClientListener.getInstance();
-        clInstance.addEventHandler(serverInstance);
-        clInstance.Init();
+        msgHandler.start();
+        clientListener.start();
         
-        clInstance.start();
     }
     
     

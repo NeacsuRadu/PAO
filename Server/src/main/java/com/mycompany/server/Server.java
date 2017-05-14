@@ -6,6 +6,7 @@
 package com.mycompany.server;
 
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,14 +26,23 @@ public class Server implements ClientEvents
     
     private Server()
     {
-        
+        clients = new ArrayList();
     }
+    
+    private ArrayList<Client> clients;
+    
+    
     
     
     @Override
     public void NewClientConnection(Socket clientSocket)
     {
-        MessageHandler.getInstance().releaseSemaphore();
+        System.out.println("Server, new client connection");
+        synchronized(clients)
+        {
+            clients.add(new Client(clientSocket));
+            clients.get(clients.size() - 1).startReceivingMessages();
+        }
     }
     
 }

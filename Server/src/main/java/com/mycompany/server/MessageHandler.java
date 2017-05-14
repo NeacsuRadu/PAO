@@ -73,7 +73,9 @@ public class MessageHandler implements Runnable
         {
             try 
             {
+                System.out.println("Message handler, waiting to process messages");
                 semaphore.acquire();
+                System.out.println("Message handler, new message.");
                 MessageTask task = getTask();
                 if (task != null)
                 {
