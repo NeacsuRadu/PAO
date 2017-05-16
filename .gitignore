@@ -1,2 +1,4 @@
 /Server/target/
 /Client/nbproject/private/
+/Client/build/
+/Client/dist/
