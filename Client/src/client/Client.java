@@ -5,46 +5,30 @@
  */
 package client;
 
-import com.sun.javaws.Main;
-import java.io.IOException;
+
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import org.json.JSONObject;
 
-
-public class Client extends Application {
+public class Client extends Application 
+{
     
-    private Stage primaryStage;
-    private BorderPane mainLayout;
-    
-    @Override
-    public void start(Stage primaryStage) throws IOException {
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Client App");
-        showMainView();
+     @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("firstPage.fxml"));
         
-    }
-    
-    public void showMainView() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("view/MainView.fxml"));
-        mainLayout = loader.load();
-        Scene scene = new Scene(mainLayout);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-   
-    public static void main(String[] args) 
-    {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
         launch(args);
     }
     
