@@ -57,7 +57,7 @@ public class RegisterPageController implements Initializable {
     @FXML
     private PasswordField cfPassword;
 
-
+    
     @FXML
     void back(ActionEvent event) throws IOException 
     {

@@ -26,7 +26,9 @@ import javafx.stage.Stage;
  * @author Suzana
  */
 public class FirstPageController implements Initializable {
-
+    
+    private Client main;
+    
    @FXML
     private TextField username;
     @FXML
@@ -46,19 +48,19 @@ public class FirstPageController implements Initializable {
         // TODO
     }    
     
-    public void signup(ActionEvent event) throws IOException
-    {
-        Stage stage = null; 
-        Parent root = null;
-            
-        stage=(Stage) signUp.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("registerPage.fxml"));
+       void setClient( Client main) {
         
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        this.main = main;
         
     }
+    
+    public void signup(ActionEvent event) throws IOException {
+        
+        main.showRegisterPage();
+        
+    }
+    
+ 
     
     public void signin(ActionEvent event) throws IOException
     {
