@@ -29,18 +29,12 @@ public class FirstPageController implements Initializable {
     
     private Client main;
     
-   @FXML
-    private TextField username;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private Label warning;   
-    @FXML
-    private Label emptyField; 
-    @FXML
-    private Button signIn;
-    @FXML
-    private Button signUp;
+    @FXML private TextField username;
+    @FXML private PasswordField password;
+    @FXML private Label warning;   
+    @FXML private Label emptyField; 
+    @FXML private Button signIn;
+    @FXML private Button signUp;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
@@ -48,21 +42,19 @@ public class FirstPageController implements Initializable {
         // TODO
     }    
     
-       void setClient( Client main) {
-        
+    void setClient(Client main) 
+    {
         this.main = main;
-        
     }
     
-    public void signup(ActionEvent event) throws IOException {
-        
+    public void signup(ActionEvent event)
+    {
         main.showRegisterPage();
-        
     }
     
  
     
-    public void signin(ActionEvent event) throws IOException
+    public void signin(ActionEvent event)
     {
         // verificare date (username + parola)
        
@@ -73,7 +65,7 @@ public class FirstPageController implements Initializable {
         
         if(!username.getText().equals("") && !password.getText().equals(""))
         {
-            Stage stage = null; 
+            /*Stage stage = null; 
             Parent root = null;
         
             stage=(Stage) signIn.getScene().getWindow();
@@ -81,7 +73,8 @@ public class FirstPageController implements Initializable {
         
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.show();
+            stage.show();*/
+            main.showGamePage();
         }
         else
         {

@@ -24,6 +24,7 @@ public class Client
     private PrintWriter socketOutput;   
     private ArrayList<ClientEvents> handlers;
     private boolean isPlaying;
+    private String oponent;
     
     public void startReceivingMessages()
     {
@@ -71,6 +72,16 @@ public class Client
     public boolean isPlaying()
     {
         return this.isPlaying;
+    }
+    
+    public String getOponent()
+    {
+        return this.oponent;
+    }
+    
+    public void setOponent(String oponent)
+    {
+        this.oponent = oponent;
     }
     
     public void setPlayState(boolean isPlaying)

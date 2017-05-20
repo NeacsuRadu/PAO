@@ -26,43 +26,76 @@ public class Client extends Application
     private RegisterPageController registerPageController;
     private GamePageController gamePageController;
     
-    public void initialize() throws IOException {
+    private Scene firstPageScene;
+    private Scene registerPageScene;
+    private Scene gamePageScene;
+    
+    public boolean initialize()
+    {
+        boolean bRet = true;
+        try
+        {
+            firstPageLoader = new FXMLLoader();
+            registerPageLoader = new FXMLLoader();
+            gamePageLoader = new FXMLLoader();
+
+            firstPageLoader.setLocation(Client.class.getResource("firstPage.fxml"));
+            registerPageLoader.setLocation(Client.class.getResource("registerPage.fxml"));
+            gamePageLoader.setLocation(Client.class.getResource("gamePage.fxml")); 
+
+            Parent rootFirst = firstPageLoader.load();
+            Parent rootRegister = registerPageLoader.load();
+            Parent rootGame = gamePageLoader.load();
+
+            firstPageScene = new Scene(rootFirst);
+            registerPageScene = new Scene(rootRegister);
+            gamePageScene = new Scene(rootGame);
+
+            firstPageController = firstPageLoader.getController();
+            registerPageController = registerPageLoader.getController();
+            gamePageController = gamePageLoader.getController();
+
+            firstPageController.setClient(this);
+            registerPageController.setClient(this);
+            gamePageController.setClient(this);
+        }
+        catch(IOException ex)
+        {
+            bRet = false;
+            System.out.println("Failed to inialize: " + ex.getMessage());
+        }
         
-        firstPageLoader = new FXMLLoader();
-        registerPageLoader = new FXMLLoader();
-        gamePageLoader = new FXMLLoader();
-        
-        firstPageLoader.setLocation(Client.class.getResource("firstPage.fxml"));
-        registerPageLoader.setLocation(Client.class.getResource("registerPage.fxml"));
-        gamePageLoader.setLocation(Client.class.getResource("gamePage.fxml")); 
-        
-        //registerPageController = registerPageLoader.getController();
-        //gamePageController = gamePageLoader.getController();
-       
-        
+        return bRet;
     }
     
      @Override
-    public void start(Stage primaryStage) throws Exception {
-        
+    public void start(Stage primaryStage)
+    {    
         this.primaryStage = primaryStage;
-        initialize();
-       
-        Parent root = firstPageLoader.load();
-        firstPageController = firstPageLoader.getController();
-        firstPageController.setClient(this);
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
+        if (!initialize())
+            return;
+        
+        this.primaryStage.setTitle("Fucking tic tac toe");
+        this.primaryStage.setResizable(false);
+        primaryStage.setScene(firstPageScene);
         primaryStage.show();
     }
     
-    public void showRegisterPage() throws IOException {
-        
-        Parent root = registerPageLoader.load();
-        firstPageController = firstPageLoader.getController();
-        firstPageController.setClient(this);
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
+    public void showRegisterPage()
+    {
+        primaryStage.setScene(registerPageScene);
+        primaryStage.show();
+    }
+    
+    public void showFirstPage()
+    {
+        primaryStage.setScene(firstPageScene);
+        primaryStage.show();
+    }
+    
+    public void showGamePage()
+    {
+        primaryStage.setScene(gamePageScene);
         primaryStage.show();
     }
 

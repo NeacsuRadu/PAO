@@ -28,52 +28,37 @@ import javafx.stage.Stage;
  */
 public class RegisterPageController implements Initializable {
     
-    @FXML
-    private Label label;
-    @FXML
-    private Button backBt;
-    @FXML
-    private Button signIn;
-    @FXML
-    private Label passLength;
-    @FXML
-    private Label passConfirm;
-    @FXML
-    private Label emptyField;
-    @FXML
-    private Label emailCf;
-    @FXML
-    private Label usernameTaken;
-     @FXML
-    private TextField firstName;
-    @FXML
-    private TextField lastName;
-    @FXML
-    private TextField email;
-    @FXML
-    private TextField username;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private PasswordField cfPassword;
+    private Client main;
+    
+    @FXML private Label label;
+    @FXML private Button backBt;
+    @FXML private Button signIn;
+    @FXML private Label passLength;
+    @FXML private Label passConfirm;
+    @FXML private Label emptyField;
+    @FXML private Label emailCf;
+    @FXML private Label usernameTaken;
+    @FXML private TextField firstName;
+    @FXML private TextField lastName;
+    @FXML private TextField email;
+    @FXML private TextField username;
+    @FXML private PasswordField password;
+    @FXML private PasswordField cfPassword;
 
     
-    @FXML
-    void back(ActionEvent event) throws IOException 
+    public void setClient(Client main)
     {
-        Stage stage = null; 
-        Parent root = null;
-        
-        stage=(Stage) backBt.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("firstPage.fxml"));
-        
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        this.main = main;
     }
     
     @FXML
-    public void signin(ActionEvent event) throws IOException
+    void back(ActionEvent event) 
+    {
+        main.showFirstPage();
+    }
+    
+    @FXML
+    public void signin(ActionEvent event)
     {
         String mail = email.getText();
         
@@ -83,7 +68,7 @@ public class RegisterPageController implements Initializable {
         boolean matchFound = m.matches();
         
 
-       if ( !firstName.getText().equals("") && !lastName.getText().equals("") &&  !mail.equals("") && !username.getText().equals("") && !password.getText().equals(""))
+        if ( !firstName.getText().equals("") && !lastName.getText().equals("") &&  !mail.equals("") && !username.getText().equals("") && !password.getText().equals(""))
         {    
             if(matchFound)
             {
@@ -91,17 +76,7 @@ public class RegisterPageController implements Initializable {
                 {       
                     if(password.getText().equals(cfPassword.getText()))
                     {
-                        
-                        Stage stage = null; 
-                        Parent root = null;
-        
-                        stage=(Stage) signIn.getScene().getWindow();
-                        root = FXMLLoader.load(getClass().getResource("gamePage.fxml"));
-        
-                        Scene scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.show();
-                        
+                        main.showGamePage();
                     //daca exista in baza de date
                     //-> usernameTaken.setVisibility(true);
                     }
@@ -140,7 +115,8 @@ public class RegisterPageController implements Initializable {
    
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) 
+    {
         // TODO
     }    
     

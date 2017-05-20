@@ -28,66 +28,35 @@ import javafx.stage.Stage;
  */
 public class GamePageController implements Initializable 
 {
-
-    @FXML
-    private Button b11;
-
-    @FXML
-    private Button b12;
-
-    @FXML
-    private Button b13;
-
-    @FXML
-    private Button b21;
-
-    @FXML
-    private Button b22;
-
-    @FXML
-    private Button b23;
-
-    @FXML
-    private Button b31;
-
-    @FXML
-    private Button b32;
-
-    @FXML
-    private Button b33;
-
-    @FXML
-    private Label playerTurn;
+    private Client main;
     
-    @FXML
-    private Button backBt;
-    
-    @FXML
-    private Button newGame;
-    
-    @FXML
-    private Label lb1;
-    
-    @FXML
-    private Label lb3;
-
-    @FXML
-    private ProgressBar progressBar;
+    @FXML private Button b11;
+    @FXML private Button b12;
+    @FXML private Button b13;
+    @FXML private Button b21;
+    @FXML private Button b22;
+    @FXML private Button b23;
+    @FXML private Button b31;
+    @FXML private Button b32;
+    @FXML private Button b33;   
+    @FXML private Label playerTurn;
+    @FXML private Button backBt;
+    @FXML private Button newGame;
+    @FXML private Label lb1;
+    @FXML private Label lb3;
+    @FXML private ProgressBar progressBar;
 
     private boolean isFirstPlayer = true;
     
-    @FXML
-    void newgame(ActionEvent event) throws IOException 
+    public void setClient(Client main)
     {
-        Stage stage = null; 
-        Parent root = null;
-        
-        stage=(Stage) newGame.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("gamePage.fxml"));
-        
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();        
+        this.main = main;
+    }
+    
+    @FXML
+    void newgame(ActionEvent event) 
+    {
+        main.showGamePage();
     }
     @FXML
     void onClick(ActionEvent event) 
@@ -152,7 +121,6 @@ public class GamePageController implements Initializable
             return true;
         }
         return false;
-            
     }
     
     private boolean itsAMatch()
@@ -301,21 +269,14 @@ public class GamePageController implements Initializable
     }
     
     @FXML
-    void back(ActionEvent event) throws IOException 
+    void back(ActionEvent event)
     {
-        Stage stage = null; 
-        Parent root = null;
-        
-        stage=(Stage) backBt.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("firstPage.fxml"));
-        
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        main.showFirstPage();
     }
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) 
+    {
         // TODO
     }    
     
