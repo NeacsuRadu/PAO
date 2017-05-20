@@ -8,6 +8,8 @@ package com.mycompany.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,17 +22,19 @@ public class MessageListener implements Runnable
 {
     private Scanner socketReader;
     private MessageHandler messageHandler;
+    private Client handler;
     
-    public MessageListener(Scanner buff)
+    public MessageListener(Scanner buff, Client handler)
     {
         socketReader = buff;
         messageHandler = MessageHandler.getInstance();
         workerThread = new Thread(this);
+        this.handler = handler;
     }
     
     
     private Thread workerThread;
-  
+    
     public void start()
     {
         workerThread.start();
@@ -42,14 +46,23 @@ public class MessageListener implements Runnable
         String line;
         while (true)
         {
-            line = socketReader.nextLine();
+            try
+            {
+                line = socketReader.nextLine();
+            }
+            catch(NoSuchElementException ex)
+            {
+                line = null;
+            }
             if(line == null)
             {
                 System.out.println("Connection closed !!! Close the fucking socket !!");
+                handler.ClientDisconnected();
                 break;
             }
-            messageHandler.addMessageTask(new MessageTask(line));
+            messageHandler.addMessageTask(new MessageTask(line, handler));
             messageHandler.releaseSemaphore();
         }
     }   
+    
 }

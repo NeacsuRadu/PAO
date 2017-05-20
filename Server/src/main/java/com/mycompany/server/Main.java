@@ -16,9 +16,12 @@ public class Main
    
     public static void main(String args[])
     {
-        MessageHandler             msgHandler = MessageHandler.getInstance();
-        Server                     server = Server.getInstance();
-        ClientListener             clientListener = ClientListener.getInstance();
+        MessageHandler              msgHandler = MessageHandler.getInstance();
+        Server                      server = Server.getInstance();
+        ClientListener              clientListener = ClientListener.getInstance();
+        UserDataBase                dataBaseInstance = UserDataBase.getInstance();
+        
+        
         
         clientListener.addEventHandler(server);
         clientListener.Init();

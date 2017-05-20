@@ -3,8 +3,25 @@ package com.mycompany.server;
 import java.io.*;
 import java.util.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class UserDataBase 
 {
+    static private String hostname = "localhost";
+    static private String database = "monkey";
+    static private String usr = "luffy";
+    static private String pass = "d.luffy69";
+    static private int port = 3306;
+    
+    private Connection connection;
+    private Statement statement;
     
     static private UserDataBase instance;
     static public UserDataBase getInstance()
@@ -19,103 +36,77 @@ public class UserDataBase
     private UserDataBase()
     {
         userList = new ArrayList<>();
-        path = new String();
+    
     }
     private ArrayList<UserData> userList;
-    private String path = "data";
     
-    public void load() throws FileNotFoundException
+    public boolean connect()
     {
-       Scanner sc = new Scanner(new File (path));
-       
-       while(sc.hasNext())
-       {
-           String firstName,lastName,email,username,password;
-           
-           firstName = sc.next();
-           lastName = sc.next();
-           email = sc.next();
-           username = sc.next();
-           password = sc.next();
-       }
-       sc.close();
-    }
-   
-    public void saveUser (UserData user) throws IOException
-    {
-        try (FileWriter out = new FileWriter(new File(path),true)) 
+        boolean connected = true;
+        try
         {
-            out.write("\n");
-            out.write(user.getFirstName()+ " " +
-                      user.getLastName() + " " +
-                      user.getEmail()    + " " +
-                      user.getUsername() + " " +
-                      user.getPassword() );
-            out.write("\n");
-            
-            out.close();
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?user=" + usr + "&password=" + pass);
+            statement = connection.createStatement();
         }
-        userList.add(user);
+        catch(SQLException | ClassNotFoundException ex)
+        {
+            System.out.println("DataBase connect: " + ex.getMessage());
+            connected = false;
+        }
+        return connected;
     }
     
-    public boolean isOnline(String username)
+    public boolean isRegistered(String username)
     {
-      for(int i = 0; i <= userList.size(); i ++ )
-      {
-          if(userList.get(i).getUsername().equals(username))
-          {
-              if(userList.get(i).getClientSocket() == null )
-              {
-                  return false;
-              }
-              else
-              {
-                  return true;
-              }
-          }
-      }
-        return false;
-    }
-    
-    public boolean isValid(String username)
-    {
-        for(int i = 0; i <= userList.size(); i ++ )
-      {
-          if(userList.get(i).getUsername().equals(username))
-            {
-                return true;
-            }
-      }
-        return false;
-    }
-    
-    public boolean addIfPossible(UserData user) throws IOException
-    {
-        for(int i = 0; i <= userList.size(); i ++ )
-      {
-          if(userList.get(i).getUsername().equals(user.getUsername()))
-          {
-             return false;
-          }
-          if(userList.get(i).getEmail().equals(user.getEmail()))
-          {
-             return false;
-          }
-      }
-        saveUser(user);
+        // checks if username is in the database :) tip: resSet.first returns boolean 
+        
         return true;
     }
-
-    public boolean isRegistered(String username, String password)
+  
+    public boolean checkCredentials(String username, String password)
     {
-        //modificari pt varianta cu +client
-         for(int i = 0; i <= userList.size(); i ++ )
+        return true; // if username password combination is valid. tip: retSet.first :D 
+    }
+    
+    public UserData getUser(String username)
+    {
+        return null;
+    }
+    
+    public boolean isAlreadyRegistered(String username, String email)
+    {
+        // when someone tries to register, we need to check if the username or email is already in out data base :D 
+        
+        return true;
+    }
+    
+    public void insertUser(UserData user)
+    {
+        // statement.executeUpdate 
+    }
+    
+    public void updateUser(UserData user)
+    {
+        // statement.executeUpdate 
+    }
+    
+    public ArrayList<String> getUserNames()
+    {
+        ArrayList<String> usernames = new ArrayList();
+        try 
         {
-          if(userList.get(i).getUsername().equals(username) && userList.get(i).getPassword().equals(password) )
+            ResultSet resSet = statement.executeQuery("SELECT username FROM users;");
+            while (resSet.next())
             {
-                return true;
+                usernames.add(resSet.getString("username"));
             }
+        } 
+        catch (SQLException ex) 
+        {
+            System.out.println("DataBase getUsernames: " + ex.getMessage());
         }
-         return false;
+        return usernames;
     }
 }
