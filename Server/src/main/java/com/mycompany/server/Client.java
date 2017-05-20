@@ -8,6 +8,7 @@ package com.mycompany.server;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,8 +21,9 @@ public class Client
 {
     private Socket clientSocket; 
     private MessageListener msgList;
-    private PrintWriter socketOutput;
-    
+    private PrintWriter socketOutput;   
+    private ArrayList<ClientEvents> handlers;
+    private boolean isPlaying;
     
     public void startReceivingMessages()
     {
@@ -34,8 +36,10 @@ public class Client
         try 
         {
             this.clientSocket = clientSocket;
-            msgList = new MessageListener(new Scanner(this.clientSocket.getInputStream()));
+            msgList = new MessageListener(new Scanner(this.clientSocket.getInputStream()), this);
             socketOutput = new PrintWriter(this.clientSocket.getOutputStream(), true);
+            handlers = new ArrayList();
+            isPlaying = false;
         } 
         catch (IOException ex) 
         {
@@ -43,7 +47,34 @@ public class Client
         }
     }
     
+    public void SendMessage(String message)
+    {
+        synchronized(socketOutput)
+        {
+            socketOutput.println(message);
+        }
+    }
     
+    public void AddHandler(ClientEvents handler)
+    {
+        handlers.add(handler);
+    }
     
+    public void ClientDisconnected()
+    {
+        for(ClientEvents handler : handlers)
+        {
+            handler.ClientDisconnected(this);
+        }
+    }
     
+    public boolean isPlaying()
+    {
+        return this.isPlaying;
+    }
+    
+    public void setPlayState(boolean isPlaying)
+    {
+        this.isPlaying = isPlaying;
+    }
 }

@@ -12,14 +12,23 @@ package com.mycompany.server;
 public class MessageTask 
 {
     private String message;
+    private Client senderClient;
     
-    public MessageTask(String message)
+    public MessageTask(String message, Client senderClient)
     {
         this.message = message;
+        this.senderClient = senderClient;
     }
     
-    public void processMessage()
+    public String getMessage()
     {
-        System.out.println("The message is: " + message);
+        return message;
     }
+    
+    public Client getSender()
+    {
+        return senderClient;
+    }
+    
+    
 }

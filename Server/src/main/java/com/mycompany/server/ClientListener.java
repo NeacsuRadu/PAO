@@ -87,7 +87,7 @@ public class ClientListener implements Runnable
                 System.out.println("Client listener, new client connection.");
                 for (ClientEvents handler : handlers)
                 {   
-                    handler.NewClientConnection(clientSocket);
+                    handler.NewClientConnection(new Client(clientSocket));
                 }
             } 
             catch (IOException ex) 

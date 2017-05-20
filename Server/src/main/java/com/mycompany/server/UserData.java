@@ -3,11 +3,16 @@ package com.mycompany.server;
 public class UserData
 {
     
-    private String firstName,lastName,email,username,password;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String username;
+    private String password;
     private int numberOfWins;
-    private Client clientSocket = null;
+    private int numberOfGamesPlayed;
+    private int numberOfDraws;
 
-    public UserData(String firstName, String lastName, String email, String username, String password, int numberOfWins) 
+    public UserData(String firstName, String lastName, String email, String username, String password, int numberOfWins, int numberOfDraws, int numberOfGamesPlayed) 
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -15,6 +20,8 @@ public class UserData
         this.username = username;
         this.password = password;
         this.numberOfWins = numberOfWins;
+        this.numberOfDraws = numberOfDraws;
+        this.numberOfGamesPlayed = numberOfGamesPlayed;
     }
 
     public String getFirstName()
@@ -47,19 +54,14 @@ public class UserData
         return numberOfWins;
     }
     
-    public Client getClientSocket()
+    public int getNumberOfDraws()
     {
-        return clientSocket;
-    }
-
-    public void setClientSocket(Client clientSocket)
-    {
-        this.clientSocket = clientSocket;
+        return numberOfDraws;
     }
     
-    public void Winner()
+    public int getNumberOfGamesPlayed()
     {
-        ++ this.numberOfWins;
+        return numberOfGamesPlayed;
     }
     
     
