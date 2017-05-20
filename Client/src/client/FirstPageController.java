@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -26,14 +27,15 @@ import javafx.stage.Stage;
 public class FirstPageController implements Initializable {
 
    @FXML
-    private TextField usernameTxt;
-
+    private TextField username;
     @FXML
-    private TextField passwordTxt;
-
+    private TextField password;
+    @FXML
+    private Label warning;   
+    @FXML
+    private Label emptyField; 
     @FXML
     private Button signIn;
-
     @FXML
     private Button signUp;
     
@@ -56,18 +58,31 @@ public class FirstPageController implements Initializable {
         stage.show();
         
     }
+    
     public void signin(ActionEvent event) throws IOException
     {
         // verificare date (username + parola)
-        Stage stage = null; 
-        Parent root = null;
+       
+        //if ( date_incorecte ) 
+            //warning.setVisible(true);
+        //else
         
-        stage=(Stage) signIn.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("gamePage.fxml"));
         
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
+        if(!username.getText().equals("") && !password.getText().equals(""))
+        {
+            Stage stage = null; 
+            Parent root = null;
+        
+            stage=(Stage) signIn.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("gamePage.fxml"));
+        
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        else
+        {
+           emptyField.setVisible(true);
+        }
     }
 }
