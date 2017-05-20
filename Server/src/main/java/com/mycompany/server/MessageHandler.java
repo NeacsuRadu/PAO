@@ -5,6 +5,7 @@
  */
 package com.mycompany.server;
 
+import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -30,7 +31,7 @@ public class MessageHandler implements Runnable
     static final private int IS_NOT_ONLINE = 70;
     static final private int IS_ALREADY_PLAYING = 71;
     static final private int PENDING_RESPONSE = 72;
-    
+
     static private MessageHandler instance;
     static public MessageHandler getInstance()
     {
@@ -98,11 +99,11 @@ public class MessageHandler implements Runnable
             catch (InterruptedException ex) 
             {
                 System.out.println("Message handler exception: " + ex.getMessage());
-            }
+            } 
         }
     }
     
-    private String getUserData(String username)
+    private String getUserData(String username) throws SQLException
     {
         UserData user = UserDataBase.getInstance().getUser(username);
         JSONObject userData = new JSONObject();
@@ -161,7 +162,10 @@ public class MessageHandler implements Runnable
     }
     
     
-    private void processTask(MessageTask task)
+
+   // private void processTask(MessageTask task)
+
+    private void processTask(MessageTask task)// throws SQLException
     {
         JSONObject messageJSON = new JSONObject(task.getMessage());
         
@@ -178,7 +182,14 @@ public class MessageHandler implements Runnable
                 boolean isValidCombination = UserDataBase.getInstance().checkCredentials(username, password);
                 if (isValidCombination)
                 {
-                    task.getSender().SendMessage(getUserData(username));
+                    try 
+                    {
+                        task.getSender().SendMessage(getUserData(username));
+                    } 
+                    catch (SQLException ex) 
+                    {
+                        System.out.println("heh");
+                    }
                 }
                 else
                 {
@@ -186,13 +197,13 @@ public class MessageHandler implements Runnable
                 }
                 break;
             }
-            case REGISTER:
-            {
+            case REGISTER: 
+            { 
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 String username = messageData.getString("username");
                 String email = messageData.getString("email");
                 
-                boolean alreadyRegistered = UserDataBase.getInstance().isAlreadyRegistered(username, email);
+                boolean alreadyRegistered = UserDataBase.getInstance().isAlreadyRegistered(username, email); 
                 if (!alreadyRegistered)
                 {
                     // insert user into the data base :D 
