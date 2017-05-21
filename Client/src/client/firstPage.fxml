@@ -14,21 +14,23 @@
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="696.0">
          <children>
-            <VBox layoutX="173.0" layoutY="161.0" prefHeight="322.0" prefWidth="370.0">
+            <VBox layoutX="173.0" layoutY="146.0" prefHeight="337.0" prefWidth="370.0">
                <children>
                   <Label text="Username">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="usernameTxt" />
+                  <TextField fx:id="username" />
                   <Label text="Password">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="passwordTxt" />
-                  <HBox alignment="CENTER" prefHeight="56.0" prefWidth="370.0">
+                  <TextField fx:id="password" />
+                  <Label fx:id="warning" text="Invalid username or password" textFill="#f81111" visible="false" />
+                  <Label fx:id="emptyField" prefHeight="32.0" prefWidth="364.0" text="All fields must be completed." textFill="RED" visible="false" />
+                  <HBox alignment="CENTER" prefHeight="111.0" prefWidth="370.0">
                      <children>
                         <Button fx:id="signIn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#signin" prefHeight="25.0" prefWidth="108.0" text="Sign in">
                            <font>
