@@ -58,38 +58,61 @@ public class UserDataBase
         return connected;
     }
     
-    public boolean isRegistered(String username)
-    {
-        // checks if username is in the database :) tip: resSet.first returns boolean 
-        
-        return true;
+    public boolean isRegistered(String username) throws SQLException 
+    {      
+        PreparedStatement pSt = connection.prepareStatement("select * from users where username = ?;");
+        pSt.setString(1,username);
+        ResultSet rez= pSt.executeQuery();
+
+        return rez.first();      
     }
   
-    public boolean checkCredentials(String username, String password)
+    public boolean checkCredentials(String username, String password) throws SQLException
     {
-        return true; // if username password combination is valid. tip: retSet.first :D 
-    }
-    
-    public UserData getUser(String username)
-    {
-        return null;
-    }
-    
-    public boolean isAlreadyRegistered(String username, String email)
-    {
-        // when someone tries to register, we need to check if the username or email is already in out data base :D 
+        PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? and password = ?;");
+        pSt.setString(1,username);
+        pSt.setString(2,password);
         
-        return true;
+        ResultSet rez= pSt.executeQuery();
+        
+        return rez.first();   
     }
     
-    public void insertUser(UserData user)
+    public UserData getUser(String username) throws SQLException
     {
-        // statement.executeUpdate 
+       PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? ;");
+       
+       pSt.setString(1,username);
+       ResultSet rez= pSt.executeQuery();
+        
+       rez.next();
+       
+       UserData user = new UserData(rez.getString("firstName"),rez.getString("lastName"),rez.getString("email"),rez.getString("username"),rez.getString("password"),rez.getInt("wins"),rez.getInt("draws"),rez.getInt("played"));
+              
+       return user;
     }
     
-    public void updateUser(UserData user)
+    public boolean isAlreadyRegistered(String username, String email) throws SQLException
     {
-        // statement.executeUpdate 
+        PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? or email = ?;");
+       
+        pSt.setString(1,username);
+        pSt.setString(2,email);
+        
+        ResultSet rez= pSt.executeQuery();
+        return rez.first();
+    }
+    
+    public void insertUser(UserData user) throws SQLException
+    {
+        statement = connection.createStatement();
+        statement.executeUpdate("insert into users values ('" + user.getFirstName() + "','" + user.getLastName()+ "','"+user.getEmail() + "','"+user.getUsername()+"','"+user.getPassword()+"',"+user.getNumberOfWins()+","+user.getNumberOfDraws()+","+user.getNumberOfGamesPlayed()+");");
+    }
+    
+    public void updateUser(UserData user) throws SQLException
+    {
+       statement = connection.createStatement();
+       statement.executeUpdate("update users set wins = "+ user.getNumberOfWins() + ", draws = " + user.getNumberOfDraws() + ",played="+ user.getNumberOfGamesPlayed()+" where username = '"+ user.getUsername()+"';");
     }
     
     public ArrayList<String> getUserNames()
@@ -98,10 +121,10 @@ public class UserDataBase
         try 
         {
             ResultSet resSet = statement.executeQuery("SELECT username FROM users;");
-            while (resSet.next())
-            {
+            while (resSet.next()) 
+            {   
                 usernames.add(resSet.getString("username"));
-            }
+            } 
         } 
         catch (SQLException ex) 
         {

@@ -5,6 +5,7 @@
  */
 package com.mycompany.server;
 
+import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -22,7 +23,7 @@ public class MessageHandler implements Runnable
     static final private int GAME_REQUEST = 3;
     static final private int GAME_RESPONSE = 4;
     static final private int GAME_MOVE = 5;
-    static final private int WAIT_FOR_RESPONSE = 6;
+    static final private int WAIT_FOR_RESPONSE = 6; 
     
     static private MessageHandler instance;
     static public MessageHandler getInstance()
@@ -91,11 +92,13 @@ public class MessageHandler implements Runnable
             catch (InterruptedException ex) 
             {
                 System.out.println("Message handler exception: " + ex.getMessage());
+            } catch (SQLException ex) {
+                Logger.getLogger(MessageHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    private String getUserData(String username)
+    private String getUserData(String username) throws SQLException
     {
         UserData user = UserDataBase.getInstance().getUser(username);
         JSONObject userData = new JSONObject();
@@ -161,7 +164,7 @@ public class MessageHandler implements Runnable
     
     
     
-    private void processTask(MessageTask task)
+    private void processTask(MessageTask task) throws SQLException
     {
         JSONObject messageJSON = new JSONObject(task.getMessage());
         
@@ -186,13 +189,13 @@ public class MessageHandler implements Runnable
                 }
                 break;
             }
-            case REGISTER:
-            {
+            case REGISTER: 
+            { 
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 String username = messageData.getString("username");
                 String email = messageData.getString("email");
                 
-                boolean alreadyRegistered = UserDataBase.getInstance().isAlreadyRegistered(username, email);
+                boolean alreadyRegistered = UserDataBase.getInstance().isAlreadyRegistered(username, email); 
                 if (!alreadyRegistered)
                 {
                     // insert user into the data base :D 
