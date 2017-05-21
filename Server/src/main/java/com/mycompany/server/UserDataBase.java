@@ -63,7 +63,7 @@ public class UserDataBase
         {
             PreparedStatement pSt = connection.prepareStatement("select * from users where username = ?;");
             pSt.setString(1,username);
-            ResultSet rez= pSt.executeQuery();
+            ResultSet rez = pSt.executeQuery();
                   
             ok = rez.first();
         } 
@@ -71,6 +71,7 @@ public class UserDataBase
         {
            System.out.println("UserDataBase isRgistered: " + ex.getMessage());
         }
+        System.out.println("Is registered: " + username + " " + ok);
         return ok;
     }
   
@@ -82,15 +83,15 @@ public class UserDataBase
             PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? and password = ?;");
             pSt.setString(1,username);
             pSt.setString(2,password);
-            
             ResultSet rez= pSt.executeQuery();
                
-           ok= rez.first();
+            ok= rez.first();
         } 
         catch (SQLException ex)
         {
             System.out.println("UserDataBase checkCredentials: " + ex.getMessage());
         }
+        System.out.println("Check credentials: " + username + " " + password + " " + ok);
         return ok;      
     }
     
@@ -123,23 +124,24 @@ public class UserDataBase
         try
         {
             PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? or email = ?;");
-            
             pSt.setString(1,username);
             pSt.setString(2,email);
-            
             ResultSet rez= pSt.executeQuery();
+            
             ok = rez.first();
         } 
         catch (SQLException ex) 
         {
             System.out.println("UserDataBase isAlreadyRegistered: " + ex.getMessage());
         }
+        System.out.println("IsAlreadyRegistered: " + username + " " + email + " " + ok);
         return ok;
     }
     
     
     public void insertUser(UserData user) 
     {
+        System.out.println("Insert user!!" + user.getUsername());
         try 
         {
             statement = connection.createStatement();

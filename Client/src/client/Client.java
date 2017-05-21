@@ -8,13 +8,14 @@ package client;
 
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class Client extends Application 
+public class Client extends Application implements MainController 
 {
     private Stage primaryStage;
     
@@ -30,11 +31,13 @@ public class Client extends Application
     private Scene registerPageScene;
     private Scene gamePageScene;
     
+    private ClientSocket clientSocket;
+    
     public boolean initialize()
     {
         boolean bRet = true;
         try
-        {
+        {            
             firstPageLoader = new FXMLLoader();
             registerPageLoader = new FXMLLoader();
             gamePageLoader = new FXMLLoader();
@@ -58,6 +61,15 @@ public class Client extends Application
             firstPageController.setClient(this);
             registerPageController.setClient(this);
             gamePageController.setClient(this);
+            
+            clientSocket = new ClientSocket(this);
+            if (!clientSocket.init())
+            {
+                // add code to tell the user that he needs to pay his bills 
+                System.out.println("Failed to init the connection with the server !!");
+                clientSocket = null;
+            }
+            System.out.println("All good");
         }
         catch(IOException ex)
         {
@@ -104,6 +116,85 @@ public class Client extends Application
      */
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    // ------------------------- MAIN CONTROOLER IMPLEMENTATION -------------------------
+    
+    @Override 
+    public void sendMessage(String message)
+    {
+        System.out.println("Sending message: " + message);
+        clientSocket.sendMessage(message);
+    }
+    
+    @Override
+    public void invaliCredentials()
+    {
+        firstPageController.showInvalideUsernamePasswordCombination();
+    }
+    
+    @Override
+    public void loginSuccessful(UserData userData)
+    {
+        Platform.runLater( 
+        () -> 
+        {
+            System.out.println("altceva");
+            this.showGamePage();
+        });
+    }
+    
+    @Override
+    public void failderRegistration()
+    {
+        registerPageController.showRegistrationFailedLabel();
+    }
+    
+    @Override
+    public void successfulRegistration()
+    {
+        Platform.runLater(
+        ()->
+        {
+            System.out.println("ceva");
+            this.showFirstPage();
+        });
+    }
+    
+    @Override
+    public void setUserDoesNotExistsText(String username)
+    {
+        // tell him the user he entered does not exists 
+    }
+    
+    @Override
+    public void setUserInNotOnlineText(String username)
+    {
+        // tell him the user he entered does not existts
+    }
+    
+    @Override
+    public void setUserIsAlreadyPlayingText(String username)
+    {
+        // tell him the user he entered is already playing 
+    }
+    
+    @Override
+    public void setWaitingResponseFromUserText(String username)
+    {
+        // the user he entered was notified, need to wait confirmation 
+    }
+    
+    @Override
+    public void responseFromUser(String username, boolean accept)
+    {
+        // some response for the request made earlier 
+    }
+    
+    @Override
+    public void playerMadeAMove(int row, int col)
+    {
+        // a move was made, need to update :) s
     }
     
 }

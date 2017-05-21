@@ -11,6 +11,12 @@ package client;
  */
 public interface MainController 
 {
+    public void showRegisterPage();
+    public void showFirstPage();
+    public void showGamePage();
+    
+    public void sendMessage(String message);
+    
     public void invaliCredentials();
     public void loginSuccessful(UserData userData);
     public void failderRegistration();

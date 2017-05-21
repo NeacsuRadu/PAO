@@ -19,10 +19,11 @@ public class MessageListener implements Runnable
     private Thread workerThread;
     private MainController controller;
     
-    public MessageListener(Scanner sc)
+    public MessageListener(Scanner sc, MainController mainController)
     {
         this.socketScanner = sc;
         workerThread = new Thread(this);
+        this.controller = mainController;
     }
     
     
@@ -57,6 +58,7 @@ public class MessageListener implements Runnable
     
     private void processMessage(String message)
     {
+        System.out.println("New message: " + message);
         JSONObject messageJSON = new JSONObject(message);
         int type = messageJSON.getInt("type");
         switch (type)
@@ -91,6 +93,7 @@ public class MessageListener implements Runnable
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 
                 boolean bResult = messageData.getBoolean("result");
+                System.out.println("REGISTER message result: " + bResult);
                 if (bResult)
                 {
                     controller.failderRegistration();

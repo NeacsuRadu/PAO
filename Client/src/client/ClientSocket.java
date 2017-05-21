@@ -21,20 +21,22 @@ public class ClientSocket
     private Socket socket;
     private PrintWriter socketWriter;
     private MessageListener messageListener;
+    private MainController mainController;
     
-    public ClientSocket()
+    public ClientSocket(MainController mainController)
     {
-        
+        this.mainController = mainController;
     }
     
-    private boolean init()
+    public boolean init()
     {
         boolean bRet = true;
         try
         {
             socket = new Socket("localhost", 45000);
             socketWriter = new PrintWriter(socket.getOutputStream(), true);
-            messageListener = new MessageListener(new Scanner(socket.getInputStream()));
+            messageListener = new MessageListener(new Scanner(socket.getInputStream()), mainController);
+            messageListener.start();
         }
         catch(UnknownHostException ex)
         {

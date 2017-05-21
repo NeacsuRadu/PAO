@@ -35,7 +35,7 @@ public class Messages
         
         JSONObject messageJSON = new JSONObject();
         messageJSON.put("type", LOGIN);
-        messageJSON.put("data", messageJSON);
+        messageJSON.put("data", messageData);
      
         return messageJSON.toString();
     }

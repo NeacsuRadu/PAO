@@ -28,7 +28,7 @@ import javafx.stage.Stage;
  */
 public class RegisterPageController implements Initializable {
     
-    private Client main;
+    private MainController mainController;
     
     @FXML private Label label;
     @FXML private Button backBt;
@@ -38,23 +38,24 @@ public class RegisterPageController implements Initializable {
     @FXML private Label emptyField;
     @FXML private Label emailCf;
     @FXML private Label usernameTaken;
+    @FXML private Label registrationFailed;
     @FXML private TextField firstName;
     @FXML private TextField lastName;
     @FXML private TextField email;
     @FXML private TextField username;
     @FXML private PasswordField password;
     @FXML private PasswordField cfPassword;
-
     
-    public void setClient(Client main)
+    
+    public void setClient(MainController main)
     {
-        this.main = main;
+        this.mainController = main;
     }
     
     @FXML
     void back(ActionEvent event) 
     {
-        main.showFirstPage();
+        mainController.showFirstPage();
     }
     
     @FXML
@@ -66,8 +67,6 @@ public class RegisterPageController implements Initializable {
         Matcher m = p.matcher(mail);
         
         boolean matchFound = m.matches();
-        
-
         if ( !firstName.getText().equals("") && !lastName.getText().equals("") &&  !mail.equals("") && !username.getText().equals("") && !password.getText().equals(""))
         {    
             if(matchFound)
@@ -76,7 +75,7 @@ public class RegisterPageController implements Initializable {
                 {       
                     if(password.getText().equals(cfPassword.getText()))
                     {
-                        main.showGamePage();
+                        mainController.sendMessage(Messages.getRegisterMessage(firstName.getText(), lastName.getText(), mail, username.getText(), password.getText()));
                     //daca exista in baza de date
                     //-> usernameTaken.setVisibility(true);
                     }
@@ -117,7 +116,12 @@ public class RegisterPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        // TODO
+        registrationFailed.setVisible(false);
     }    
+    
+    public void showRegistrationFailedLabel()
+    {
+        registrationFailed.setVisible(true);
+    }
     
 }

@@ -27,7 +27,7 @@ import javafx.stage.Stage;
  */
 public class FirstPageController implements Initializable {
     
-    private Client main;
+    private MainController mainController;
     
     @FXML private TextField username;
     @FXML private PasswordField password;
@@ -42,43 +42,31 @@ public class FirstPageController implements Initializable {
         // TODO
     }    
     
-    void setClient(Client main) 
+    void setClient(MainController main) 
     {
-        this.main = main;
+        this.mainController = main;
     }
     
     public void signup(ActionEvent event)
     {
-        main.showRegisterPage();
+        this.mainController.showRegisterPage();
     }
     
  
-    
     public void signin(ActionEvent event)
     {
-        // verificare date (username + parola)
-       
-        //if ( date_incorecte ) 
-            //warning.setVisible(true);
-        //else
-        
-        
         if(!username.getText().equals("") && !password.getText().equals(""))
         {
-            /*Stage stage = null; 
-            Parent root = null;
-        
-            stage=(Stage) signIn.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("gamePage.fxml"));
-        
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();*/
-            main.showGamePage();
+            mainController.sendMessage(Messages.getLoginMessage(username.getText(), password.getText()));
         }
         else
         {
            emptyField.setVisible(true);
         }
+    }
+    
+    public void showInvalideUsernamePasswordCombination()
+    {
+        warning.setVisible(true);
     }
 }

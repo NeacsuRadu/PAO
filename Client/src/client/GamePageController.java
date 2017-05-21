@@ -28,7 +28,7 @@ import javafx.stage.Stage;
  */
 public class GamePageController implements Initializable 
 {
-    private Client main;
+    private MainController mainController;
     
     @FXML private Button b11;
     @FXML private Button b12;
@@ -48,15 +48,15 @@ public class GamePageController implements Initializable
 
     private boolean isFirstPlayer = true;
     
-    public void setClient(Client main)
+    public void setClient(MainController main)
     {
-        this.main = main;
+        this.mainController = main;
     }
     
     @FXML
     void newgame(ActionEvent event) 
     {
-        main.showGamePage();
+        mainController.showGamePage();
     }
     @FXML
     void onClick(ActionEvent event) 
@@ -271,7 +271,7 @@ public class GamePageController implements Initializable
     @FXML
     void back(ActionEvent event)
     {
-        main.showFirstPage();
+        mainController.showFirstPage();
     }
     
     @Override

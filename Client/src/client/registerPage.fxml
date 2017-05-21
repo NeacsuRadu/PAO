@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -31,22 +30,18 @@
                </children>
             </VBox>
             <Button fx:id="signIn" layoutX="490.0" layoutY="458.0" mnemonicParsing="false" onAction="#signin" text="Register now!" />
-            <CheckBox layoutX="248.0" layoutY="386.0" mnemonicParsing="false" text="I promise to give this game a 5/5 review.">
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </CheckBox>
             <Label alignment="CENTER" layoutX="376.0" layoutY="74.0" prefHeight="32.0" prefWidth="66.0" text="Sign up">
                <font>
                   <Font name="Times New Roman Bold" size="20.0" />
                </font>
             </Label>
             <Button fx:id="backBt" alignment="CENTER" layoutX="232.0" layoutY="458.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="89.0" text="Back" />
-            <Label fx:id="passLength" layoutX="590.0" layoutY="312.0" prefHeight="25.0" prefWidth="192.0" text="Password must be 8 characters." textFill="#e81313" visible="false" />
-            <Label fx:id="passConfirm" layoutX="590.0" layoutY="353.0" prefHeight="25.0" prefWidth="161.0" text="Password doesn't match." textFill="#f20a0a" visible="false" />
-            <Label fx:id="emptyField" layoutX="231.0" layoutY="420.0" prefHeight="17.0" prefWidth="291.0" text="All fields must be completed." textFill="RED" visible="false" />
-            <Label fx:id="usernameTaken" layoutX="595.0" layoutY="271.0" prefHeight="25.0" prefWidth="161.0" text="Username already taken." textFill="#f20909" visible="false" />
-            <Label fx:id="emailCf" layoutX="588.0" layoutY="225.0" prefHeight="25.0" prefWidth="126.0" text="Invalid email address." textFill="#ee0909" visible="false" />
+            <Label fx:id="passLength" layoutX="590.0" layoutY="355.0" prefHeight="25.0" prefWidth="192.0" text="Password must be 8 characters." textFill="#e81313" visible="false" />
+            <Label fx:id="passConfirm" layoutX="590.0" layoutY="410.0" prefHeight="25.0" prefWidth="161.0" text="Password doesn't match." textFill="#f20a0a" visible="false" />
+            <Label fx:id="emptyField" layoutX="231.0" layoutY="435.0" prefHeight="17.0" prefWidth="291.0" text="All fields must be completed." textFill="RED" visible="false" />
+            <Label fx:id="usernameTaken" layoutX="595.0" layoutY="305.0" prefHeight="25.0" prefWidth="161.0" text="Username already taken." textFill="#f20909" visible="false" />
+            <Label fx:id="emailCf" layoutX="588.0" layoutY="255.0" prefHeight="25.0" prefWidth="126.0" text="Invalid email address." textFill="#ee0909" visible="false" />
+            <Label fx:id="registrationFailed" layoutX="255.0" layoutY="516.0" prefHeight="21.0" prefWidth="291.0" text="  Failed, username of email already taken!" textFill="RED" />
          </children>
       </AnchorPane>
    </children>

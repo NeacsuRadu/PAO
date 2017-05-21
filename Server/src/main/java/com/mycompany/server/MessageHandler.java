@@ -103,7 +103,7 @@ public class MessageHandler implements Runnable
         }
     }
     
-    private String getUserData(String username) throws SQLException
+    private String getUserData(String username)
     {
         UserData user = UserDataBase.getInstance().getUser(username);
         JSONObject userData = new JSONObject();
@@ -160,13 +160,11 @@ public class MessageHandler implements Runnable
         
         return message.toString();
     }
-    
-    
 
-   // private void processTask(MessageTask task)
-
-    private void processTask(MessageTask task)// throws SQLException
+    private void processTask(MessageTask task)
     {
+        System.out.println("New Message: " + task.getMessage());
+        
         JSONObject messageJSON = new JSONObject(task.getMessage());
         
         int messageType = messageJSON.getInt("type");
@@ -175,6 +173,7 @@ public class MessageHandler implements Runnable
         {
             case LOGIN:
             {
+                System.out.println("LOGIN message");
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 String username = messageData.getString("username");
                 String password = messageData.getString("password");
@@ -182,23 +181,19 @@ public class MessageHandler implements Runnable
                 boolean isValidCombination = UserDataBase.getInstance().checkCredentials(username, password);
                 if (isValidCombination)
                 {
-                    try 
-                    {
-                        task.getSender().SendMessage(getUserData(username));
-                    } 
-                    catch (SQLException ex) 
-                    {
-                        System.out.println("heh");
-                    }
+                    System.out.println("LOGIN message - valid combination");
+                    task.getSender().SendMessage(getUserData(username));
                 }
                 else
                 {
+                    System.out.println("LOGIN message - invalid combination");
                     task.getSender().SendMessage(invalidLoginMessage());
                 }
                 break;
             }
             case REGISTER: 
             { 
+                System.out.println("REGISTER message");
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 String username = messageData.getString("username");
                 String email = messageData.getString("email");
@@ -206,6 +201,7 @@ public class MessageHandler implements Runnable
                 boolean alreadyRegistered = UserDataBase.getInstance().isAlreadyRegistered(username, email); 
                 if (!alreadyRegistered)
                 {
+                    System.out.println("REGISTER message is not registered yet");
                     // insert user into the data base :D 
                     UserData user = new UserData(
                             messageData.getString("firstname"),

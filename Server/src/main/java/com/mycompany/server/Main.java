@@ -17,35 +17,23 @@ public class Main
    
     public static void main(String args[]) throws SQLException
     {
-        /*MessageHandler              msgHandler = MessageHandler.getInstance();
+        MessageHandler              msgHandler = MessageHandler.getInstance();
         Server                      server = Server.getInstance();
         ClientListener              clientListener = ClientListener.getInstance();
         UserDataBase                dataBaseInstance = UserDataBase.getInstance();
         
-        
+        if (!dataBaseInstance.connect())
+        {
+            System.out.println("DataBase failed to connect!!");
+            return;
+        }
         
         clientListener.addEventHandler(server);
         clientListener.Init();
         
         msgHandler.start();
-        clientListener.start();*/
-       /* 
-        UserDataBase udbInstance = UserDataBase.getInstance();
-        boolean ceva = udbInstance.connect();
-        if (ceva == true)
-        {
-            
-            
-            UserData user = new UserData("elen","ionescu","elena@yahoo.com","elena","parola12",8,10,4);
-            
-           System.out.println(udbInstance.isRegistered("elen"));
-        }
-        else 
-        {
-            System.out.println("naspa");
-        }
-*/
-        
+        clientListener.start();
+       
     }
     
     
