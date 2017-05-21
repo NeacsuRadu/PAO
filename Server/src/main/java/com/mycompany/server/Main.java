@@ -29,22 +29,23 @@ public class Main
         
         msgHandler.start();
         clientListener.start();*/
-        /*
+       /* 
         UserDataBase udbInstance = UserDataBase.getInstance();
         boolean ceva = udbInstance.connect();
         if (ceva == true)
         {
             
             
-            UserData user = new UserData("elena","ionescu","elena@yahoo.com","elena","parola12",2,10,4);
+            UserData user = new UserData("elen","ionescu","elena@yahoo.com","elena","parola12",8,10,4);
             
-            udbInstance.updateUser(user);
+           System.out.println(udbInstance.isRegistered("elen"));
         }
         else 
         {
             System.out.println("naspa");
         }
-        */
+*/
+        
     }
     
     

@@ -9,8 +9,6 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UserDataBase 
 {
@@ -58,61 +56,112 @@ public class UserDataBase
         return connected;
     }
     
-    public boolean isRegistered(String username) throws SQLException 
+    public boolean isRegistered(String username) 
     {      
-        PreparedStatement pSt = connection.prepareStatement("select * from users where username = ?;");
-        pSt.setString(1,username);
-        ResultSet rez= pSt.executeQuery();
-
-        return rez.first();      
+        boolean ok = false;
+        try 
+        {
+            PreparedStatement pSt = connection.prepareStatement("select * from users where username = ?;");
+            pSt.setString(1,username);
+            ResultSet rez= pSt.executeQuery();
+                  
+            ok = rez.first();
+        } 
+        catch (SQLException ex)
+        {
+           System.out.println("UserDataBase isRgistered: " + ex.getMessage());
+        }
+        return ok;
     }
   
-    public boolean checkCredentials(String username, String password) throws SQLException
+    public boolean checkCredentials(String username, String password) 
     {
-        PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? and password = ?;");
-        pSt.setString(1,username);
-        pSt.setString(2,password);
-        
-        ResultSet rez= pSt.executeQuery();
-        
-        return rez.first();   
+        boolean ok = false ;
+        try
+        {
+            PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? and password = ?;");
+            pSt.setString(1,username);
+            pSt.setString(2,password);
+            
+            ResultSet rez= pSt.executeQuery();
+               
+           ok= rez.first();
+        } 
+        catch (SQLException ex)
+        {
+            System.out.println("UserDataBase checkCredentials: " + ex.getMessage());
+        }
+        return ok;      
     }
     
-    public UserData getUser(String username) throws SQLException
+    public UserData getUser(String username) 
     {
-       PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? ;");
-       
-       pSt.setString(1,username);
-       ResultSet rez= pSt.executeQuery();
-        
-       rez.next();
-       
-       UserData user = new UserData(rez.getString("firstName"),rez.getString("lastName"),rez.getString("email"),rez.getString("username"),rez.getString("password"),rez.getInt("wins"),rez.getInt("draws"),rez.getInt("played"));
-              
-       return user;
+        UserData user = null;
+        try 
+        {
+            PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? ;");
+            
+            pSt.setString(1,username);
+            ResultSet rez= pSt.executeQuery();
+            
+            rez.next();
+            
+            user = new UserData(rez.getString("firstName"),rez.getString("lastName"),rez.getString("email"),rez.getString("username"),rez.getString("password"),rez.getInt("wins"),rez.getInt("draws"),rez.getInt("played"));
+            
+            return user;
+        } 
+        catch (SQLException ex) 
+        {
+            System.out.println("UserDataBase getUser: " + ex.getMessage());
+        }
+        return user;
     }
     
-    public boolean isAlreadyRegistered(String username, String email) throws SQLException
+    public boolean isAlreadyRegistered(String username, String email) 
     {
-        PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? or email = ?;");
-       
-        pSt.setString(1,username);
-        pSt.setString(2,email);
-        
-        ResultSet rez= pSt.executeQuery();
-        return rez.first();
+        boolean ok = false;
+        try
+        {
+            PreparedStatement pSt = connection.prepareStatement("select * from users where username = ? or email = ?;");
+            
+            pSt.setString(1,username);
+            pSt.setString(2,email);
+            
+            ResultSet rez= pSt.executeQuery();
+            ok = rez.first();
+        } 
+        catch (SQLException ex) 
+        {
+            System.out.println("UserDataBase isAlreadyRegistered: " + ex.getMessage());
+        }
+        return ok;
     }
     
-    public void insertUser(UserData user) throws SQLException
+    
+    public void insertUser(UserData user) 
     {
-        statement = connection.createStatement();
-        statement.executeUpdate("insert into users values ('" + user.getFirstName() + "','" + user.getLastName()+ "','"+user.getEmail() + "','"+user.getUsername()+"','"+user.getPassword()+"',"+user.getNumberOfWins()+","+user.getNumberOfDraws()+","+user.getNumberOfGamesPlayed()+");");
+        try 
+        {
+            statement = connection.createStatement();
+            statement.executeUpdate("insert into users values ('" + user.getFirstName() + "','" + user.getLastName()+ "','"+user.getEmail() + "','"+user.getUsername()+"','"+user.getPassword()+"',"+user.getNumberOfWins()+","+user.getNumberOfDraws()+","+user.getNumberOfGamesPlayed()+");");
+        } 
+        catch (SQLException ex) 
+        {
+             System.out.println("UserDataBase insertUser: " + ex.getMessage());
+        }
     }
     
-    public void updateUser(UserData user) throws SQLException
+    public void updateUser(UserData user) 
     {
-       statement = connection.createStatement();
-       statement.executeUpdate("update users set wins = "+ user.getNumberOfWins() + ", draws = " + user.getNumberOfDraws() + ",played="+ user.getNumberOfGamesPlayed()+" where username = '"+ user.getUsername()+"';");
+        try 
+        {
+            statement = connection.createStatement();
+            statement.executeUpdate("update users set wins = "+ user.getNumberOfWins() + ", draws = " + user.getNumberOfDraws() + ",played="+ user.getNumberOfGamesPlayed()+" where username = '"+ user.getUsername()+"';");
+        } 
+        catch (SQLException ex) 
+        {
+            System.out.println("UserDataBase updateUser : " + ex.getMessage());
+        }
     }
     
     public ArrayList<String> getUserNames()
