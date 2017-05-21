@@ -95,7 +95,15 @@ public class GamePageController implements Initializable
         
         playerTurn.setText("PLAYER 1");
         Button clickedButton = (Button) event.getTarget();
-
+        
+        System.out.print("Butoane apasate: ");
+        
+        String id = clickedButton.getId();
+        String[] coord = id.split(",");
+        
+        System.out.print("Linia: " + Integer.parseInt(coord[0]));
+        System.out.println(" Coloana : " + Integer.parseInt(coord[1]));
+        
         String buttonLabel = clickedButton.getText();
 
         if ("".equals(buttonLabel) && isFirstPlayer)
