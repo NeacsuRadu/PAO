@@ -20,7 +20,7 @@ public class Messages
     static final public int GAME_RESPONSE = 4;
     static final public int GAME_MOVE = 5;
     static final public int WAIT_FOR_RESPONSE = 6;
-    static final public int WHO_THE_FUCK_IS_STARTING = 7;
+    static final public int UPDATE_USER_DATA = 7;
     
     static final public int DOES_NOT_EXISTS = 69;
     static final public int IS_NOT_ONLINE = 70;
@@ -110,5 +110,19 @@ public class Messages
         messageJSON.put("data", messageData);
         
         return messageJSON.toString();
+    }
+    
+    static public String getUpdateUserStatsMessage(String username, int gamesPlayed, int gamesWon, int drawGames)
+    {
+        JSONObject messageData = new JSONObject();
+        messageData.put("username", username);
+        messageData.put("played", gamesPlayed);
+        messageData.put("wins", gamesWon);
+        messageData.put("draws", drawGames);
+        
+        JSONObject messageJSON = new JSONObject();
+        messageJSON.put("type", UPDATE_USER_DATA);
+        messageJSON.put("data", messageData);
+        return messageData.toString();
     }
 }

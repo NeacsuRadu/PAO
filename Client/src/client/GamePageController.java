@@ -64,6 +64,7 @@ public class GamePageController implements Initializable
 
     private boolean isFirstPlayer;
     private boolean shouldMove;
+    private boolean inGame;
     
     public void setClient(MainController main)
     {
@@ -79,32 +80,36 @@ public class GamePageController implements Initializable
     @FXML
     void onClick(ActionEvent event) 
     {
-        //playerTurn.setText("PLAYER 1");
         Button clickedButton = (Button) event.getTarget();
-        
         if (!shouldMove || !"".equals(clickedButton.getText()))
             return;
         
-        System.out.print("Butoane apasate: ");
-        
         String id = clickedButton.getId();
         String[] coord = id.split(",");
-        
         int row = Integer.parseInt(coord[0]);
         int col = Integer.parseInt(coord[1]);
         
-        System.out.print("Linia: " + Integer.parseInt(coord[0]));
-        System.out.println(" Coloana : " + Integer.parseInt(coord[1]));
-
         clickedButton.setText(((isFirstPlayer == true) ? "X" : "0"));
         shouldMove = false;
         
+        boolean iWon = itsAMatch(((isFirstPlayer == true) ? "X" : "0"), "-fx-background-color: #FFD700;");
+        if (iWon)
+        {
+            updateWins();
+            updateStats();
+        }
+        else if (noWinner())
+        {
+            updateDraws();
+            updateStats();
+        }
+       
         mainController.sendMessage(Messages.getMoveMessage(row, col, usernameLabel.getText(), oponentLabel.getText()));
     }
     
     private boolean noWinner()
     {
-        if( !"".equals(b11.getText()) && !"".equals(b12.getText()) && !"".equals(b13.getText()) && !"".equals(b21.getText()) && !"".equals(b22.getText()) && !"".equals(b23.getText()) && 
+        /*if( !"".equals(b11.getText()) && !"".equals(b12.getText()) && !"".equals(b13.getText()) && !"".equals(b21.getText()) && !"".equals(b22.getText()) && !"".equals(b23.getText()) && 
                !"".equals(b31.getText()) && !"".equals(b32.getText()) && !"".equals(b33.getText()) && itsAMatch() == false )
         {
             b11.setDisable(true);
@@ -124,14 +129,14 @@ public class GamePageController implements Initializable
             newGame.setVisible(true);
             
             return true;
-        }
+        }*/
         return false;
     }
     
-    private boolean itsAMatch()
+    private boolean itsAMatch(String value, String style)
     {
         //linia 1
-        if(!"".equals(b11.getText()) && b11.getText().equals(b12.getText()) && b12.getText().equals(b13.getText()))
+        if (value.equals(b11.getText()) && value.equals(b12.getText()) && value.equals(b13.getText()))
         {
             b21.setDisable(true);
             b22.setDisable(true);
@@ -139,14 +144,12 @@ public class GamePageController implements Initializable
             b31.setDisable(true);
             b32.setDisable(true);
             b33.setDisable(true);
-            
-            winnerCombo(b11,b12,b13);
-            
+            winnerCombo(b11, b12, b13, style);
             return true;
         }
         
         //linia2
-        if(!"".equals(b21.getText()) && b21.getText().equals(b22.getText()) && b22.getText().equals(b23.getText()))
+        if (value.equals(b21.getText()) && value.equals(b22.getText()) && value.equals(b23.getText()))
         {
             b11.setDisable(true);
             b12.setDisable(true);
@@ -154,29 +157,26 @@ public class GamePageController implements Initializable
             b31.setDisable(true);
             b32.setDisable(true);
             b33.setDisable(true);
-           
-            winnerCombo(b21,b22,b23);
-            
+            winnerCombo(b21, b22, b23, style);
             return true;
         }
         
          //linia3
-        if(!"".equals(b31.getText()) && b31.getText().equals(b32.getText()) && b32.getText().equals(b33.getText()))
+        if (value.equals(b31.getText()) && value.equals(b32.getText()) && value.equals(b33.getText()))
         {
             b21.setDisable(true);
             b22.setDisable(true);
             b23.setDisable(true);
             b11.setDisable(true);
             b12.setDisable(true);
-            b13.setDisable(true);
-            
-            winnerCombo(b31,b32,b33);
+            b13.setDisable(true); 
+            winnerCombo(b31, b32, b33, style);
             
             return true;
         }
         
          //coloana1
-        if(!"".equals(b11.getText()) && b11.getText().equals(b21.getText()) && b21.getText().equals(b31.getText()))
+        if (value.equals(b11.getText()) && value.equals(b21.getText()) && value.equals(b31.getText()))
         {
             b12.setDisable(true);
             b13.setDisable(true);
@@ -184,14 +184,12 @@ public class GamePageController implements Initializable
             b22.setDisable(true);
             b32.setDisable(true);
             b33.setDisable(true);
-            
-            winnerCombo(b11,b21,b31);
-            
+            winnerCombo(b11, b21, b31, style);
             return true;            
         }
         
           //coloana2
-        if(!"".equals(b12.getText()) && b12.getText().equals(b22.getText()) && b22.getText().equals(b32.getText()))
+        if (value.equals(b12.getText()) && value.equals(b22.getText()) && value.equals(b32.getText()))
         {
             b11.setDisable(true);
             b13.setDisable(true);
@@ -199,29 +197,25 @@ public class GamePageController implements Initializable
             b23.setDisable(true);
             b31.setDisable(true);
             b33.setDisable(true);
-            
-            winnerCombo(b12,b22,b32);
-            
+            winnerCombo(b12, b22, b32, style);           
             return true;
         }
         
           //coloana3
-        if(!"".equals(b13.getText()) && b13.getText().equals(b23.getText()) && b23.getText().equals(b33.getText()))
+        if (value.equals(b13.getText()) && value.equals(b23.getText()) && value.equals(b33.getText()))
         {
             b11.setDisable(true);
             b12.setDisable(true);
             b21.setDisable(true);
             b22.setDisable(true);
             b31.setDisable(true);
-            b32.setDisable(true);
-            
-            winnerCombo(b13,b23,b33);
-            
+            b32.setDisable(true);           
+            winnerCombo(b13, b23, b33, style); 
             return true;
         }
         
         //diagonala principala
-        if(!"".equals(b11.getText()) && b11.getText().equals(b22.getText()) && b22.getText().equals(b33.getText()))
+        if (value.equals(b11.getText()) && value.equals(b22.getText()) && value.equals(b33.getText()))
         {
             b12.setDisable(true);
             b13.setDisable(true);
@@ -229,37 +223,32 @@ public class GamePageController implements Initializable
             b23.setDisable(true);
             b31.setDisable(true);
             b32.setDisable(true);
-            
-            winnerCombo(b11,b22,b33);
-            
+            winnerCombo(b11, b22, b33, style);           
             return true;
         }
         
         //diagonala secundara
-        if(!"".equals(b13.getText()) && b13.getText().equals(b22.getText()) && b22.getText().equals(b31.getText()))
+        if (value.equals(b13.getText()) && value.equals(b22.getText()) && value.equals(b31.getText()))
         {
             b11.setDisable(true);
             b12.setDisable(true);
             b21.setDisable(true);
             b23.setDisable(true);
             b32.setDisable(true);
-            b33.setDisable(true);
-            
-            winnerCombo(b13,b22,b31);
-            
+            b33.setDisable(true);       
+            winnerCombo(b13, b22, b31, style);
             return true;
         }
         return false;
     }
     
-    public void winnerCombo(Button b1, Button b2, Button b3)
+    public void winnerCombo(Button b1, Button b2, Button b3, String style)
     {
-        newGame.setVisible(true);
-        b1.setStyle("-fx-background-color: #FFD700;");
-        b2.setStyle("-fx-background-color: #FFD700;");
-        b3.setStyle("-fx-background-color: #FFD700;");
-        
-        if(b1.getText().equals("X"))
+        b1.setStyle(style);
+        b2.setStyle(style);
+        b3.setStyle(style);
+        //"-fx-background-color: #FFD700;"
+        /*if(b1.getText().equals("X"))
         {
             lb1.setText("");
             playerTurn.setText("PLAYER 1");
@@ -270,7 +259,7 @@ public class GamePageController implements Initializable
             lb1.setText("");
             playerTurn.setText("PLAYER 2");
             lb3.setText(" WON !");
-        }
+        }*/
     }
     
     @FXML
@@ -373,11 +362,61 @@ public class GamePageController implements Initializable
     public void playerMadeAMove(int row, int col)
     {
         buttons[row-1][col-1].setText(((isFirstPlayer == true) ? "0" : "X"));
+        boolean heWins = itsAMatch(((isFirstPlayer == true) ? "0" : "X"), "-fx-background-color: #FF0000;");
+        if (heWins)
+        {
+            updatePlayed();
+            updateStats();
+            shouldMove = false;
+            return;
+        }
+        else if (noWinner())
+        {
+            updateDraws();
+            updateStats();
+            shouldMove = false;
+            return;
+        }
         shouldMove = true;
     }
     
     private boolean decideFirstPlayer()
     {     
         return (new Random().nextInt() == 0);
+    }
+    
+    private void updateWins()
+    {
+        int wins = Integer.parseInt(gamesWon.getText()) + 1;
+        int played = Integer.parseInt(gamesPlayed.getText()) + 1;
+        gamesWon.setText("" + wins);
+        gamesPlayed.setText("" + played);
+        mainController.getUserData().increaseWins();
+        mainController.getUserData().increasePlayed();
+    }
+    
+    private void updateDraws()
+    {
+        int draws = Integer.parseInt(drawGames.getText()) + 1;
+        int played = Integer.parseInt(gamesPlayed.getText()) + 1;
+        drawGames.setText("" + draws);
+        gamesPlayed.setText("" + played);
+        mainController.getUserData().increaseDraws();
+        mainController.getUserData().increasePlayed();
+    }
+    
+    private void updatePlayed()
+    {
+        int played = Integer.parseInt(gamesPlayed.getText()) + 1;
+        gamesPlayed.setText("" + played);
+        mainController.getUserData().increasePlayed();
+    }
+    
+    private void updateStats()
+    {
+        mainController.sendMessage(Messages.getUpdateUserStatsMessage(mainController.getUserData().getUsername(), 
+                                                                          mainController.getUserData().getNumberOfGamesPlayed(),
+                                                                          mainController.getUserData().getNumberOfWins(),
+                                                                          mainController.getUserData().getNumberOfDraws()));
     }
 }

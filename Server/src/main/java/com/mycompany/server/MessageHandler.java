@@ -24,7 +24,7 @@ public class MessageHandler implements Runnable
     static final private int GAME_RESPONSE = 4;
     static final private int GAME_MOVE = 5;
     static final private int WAIT_FOR_RESPONSE = 6;
-    static final private int WHO_THE_FUCK_IS_STARTING = 7;
+    static final private int UPDATE_USER_DATA = 7;
     
     
     static final private int DOES_NOT_EXISTS = 69;
@@ -278,6 +278,19 @@ public class MessageHandler implements Runnable
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 String username_to = messageData.getString("to");
                 Server.getInstance().sendMessage(username_to, task.getMessage());
+                break;
+            }
+            case UPDATE_USER_DATA:
+            {
+                JSONObject messageData = messageJSON.getJSONObject("data");
+                UserData userData = new UserData(
+                        "", "", "", 
+                        messageData.getString("username"),"",
+                        messageData.getInt("wins"),
+                        messageData.getInt("draws"),
+                        messageData.getInt("played")
+                );
+                UserDataBase.getInstance().updateUser(userData);
                 break;
             }
             default:
