@@ -91,7 +91,7 @@ public class GamePageController implements Initializable
         
         clickedButton.setText(((isFirstPlayer == true) ? "X" : "0"));
         shouldMove = false;
-        
+        mainController.sendMessage(Messages.getMoveMessage(row, col, usernameLabel.getText(), oponentLabel.getText()));
         boolean iWon = itsAMatch(((isFirstPlayer == true) ? "X" : "0"), "-fx-background-color: #FFD700;");
         if (iWon)
         {
@@ -103,14 +103,19 @@ public class GamePageController implements Initializable
             updateDraws();
             updateStats();
         }
-       
-        mainController.sendMessage(Messages.getMoveMessage(row, col, usernameLabel.getText(), oponentLabel.getText()));
     }
     
     private boolean noWinner()
     {
-        /*if( !"".equals(b11.getText()) && !"".equals(b12.getText()) && !"".equals(b13.getText()) && !"".equals(b21.getText()) && !"".equals(b22.getText()) && !"".equals(b23.getText()) && 
-               !"".equals(b31.getText()) && !"".equals(b32.getText()) && !"".equals(b33.getText()) && itsAMatch() == false )
+        if( !"".equals(b11.getText()) && 
+            !"".equals(b12.getText()) && 
+            !"".equals(b13.getText()) && 
+            !"".equals(b21.getText()) && 
+            !"".equals(b22.getText()) && 
+            !"".equals(b23.getText()) && 
+            !"".equals(b31.getText()) && 
+            !"".equals(b32.getText()) && 
+            !"".equals(b33.getText()))
         {
             b11.setDisable(true);
             b12.setDisable(true);
@@ -120,16 +125,9 @@ public class GamePageController implements Initializable
             b23.setDisable(true);
             b31.setDisable(true);
             b32.setDisable(true);
-            b33.setDisable(true);
-            
-            lb1.setText("");
-            playerTurn.setText("NOBODY");
-            lb3.setText(" WON ! :(");
-           
-            newGame.setVisible(true);
-            
+            b33.setDisable(true);     
             return true;
-        }*/
+        }
         return false;
     }
     
@@ -329,7 +327,7 @@ public class GamePageController implements Initializable
     {
         acceptButton.setDisable(true);
         declineButton.setDisable(true);
-        mainController.sendMessage(Messages.getResponseGameRequestMessage(true, false, usernameLabel.getText(), invitationLabel.getText()));
+        mainController.sendMessage(Messages.getResponseGameRequestMessage(false, false, usernameLabel.getText(), invitationLabel.getText()));
     }
     
     public void setFeedbackLabelText(String text)
