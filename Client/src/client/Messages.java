@@ -26,6 +26,7 @@ public class Messages
     static final public int IS_NOT_ONLINE = 70;
     static final public int IS_ALREADY_PLAYING = 71;
     static final public int PENDING_RESPONSE = 72;
+    static final public int REQUEST = 73;
     
     static public String getLoginMessage(String username, String password)
     {
@@ -81,15 +82,16 @@ public class Messages
         return messageJSON.toString();
     }
     
-    static public String getResponseGameRequestMessage(boolean accept, String username_from, String username_to)
+    static public String getResponseGameRequestMessage(boolean accept, boolean firstPlayer, String username_from, String username_to)
     {
         JSONObject messageData = new JSONObject();
         messageData.put("accept", accept);
+        messageData.put("firstplayer", firstPlayer);
         messageData.put("to", username_to);
         messageData.put("from", username_from);
         
         JSONObject messageJSON = new JSONObject();
-        messageJSON.put("type", GAME_REQUEST);
+        messageJSON.put("type", GAME_RESPONSE);
         messageJSON.put("data", messageData);
         
         return messageJSON.toString();

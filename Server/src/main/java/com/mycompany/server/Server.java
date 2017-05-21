@@ -62,6 +62,7 @@ public class Server implements ClientEvents
     
     public void userDisconnected(String username)
     {
+        System.out.println("Server - user disconnected " + username);
         users.put(username, null);
     }
     
@@ -76,6 +77,7 @@ public class Server implements ClientEvents
     
     public void userConnected(String username, Client client)
     {
+        System.out.println("Server - user connected " + username);
         Client oldClient = users.get(username);
         
         if (oldClient != null)

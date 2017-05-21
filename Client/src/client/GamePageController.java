@@ -7,6 +7,7 @@ package client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
@@ -18,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 
@@ -29,6 +31,8 @@ import javafx.stage.Stage;
 public class GamePageController implements Initializable 
 {
     private MainController mainController;
+    
+    private Button[][] buttons;
     
     @FXML private Button b11;
     @FXML private Button b12;
@@ -44,9 +48,22 @@ public class GamePageController implements Initializable
     @FXML private Button newGame;
     @FXML private Label lb1;
     @FXML private Label lb3;
-    @FXML private ProgressBar progressBar;
+    
+    @FXML private Label usernameLabel;
+    @FXML private Label oponentLabel;
+    @FXML private Label gamesPlayed;
+    @FXML private Label gamesWon;
+    @FXML private Label drawGames;
+    @FXML private Label feedBackLabel;
+    @FXML private Label invitationLabel;
+    @FXML private Label firstPlayerLabel;
+    @FXML private TextField insertOponent;
+    @FXML private Button submitButton;
+    @FXML private Button acceptButton;
+    @FXML private Button declineButton;
 
-    private boolean isFirstPlayer = true;
+    private boolean isFirstPlayer;
+    private boolean shouldMove;
     
     public void setClient(MainController main)
     {
@@ -58,43 +75,31 @@ public class GamePageController implements Initializable
     {
         mainController.showGamePage();
     }
+    
     @FXML
     void onClick(ActionEvent event) 
     {
-        
-        playerTurn.setText("PLAYER 1");
+        //playerTurn.setText("PLAYER 1");
         Button clickedButton = (Button) event.getTarget();
+        
+        if (!shouldMove || !"".equals(clickedButton.getText()))
+            return;
         
         System.out.print("Butoane apasate: ");
         
         String id = clickedButton.getId();
         String[] coord = id.split(",");
         
+        int row = Integer.parseInt(coord[0]);
+        int col = Integer.parseInt(coord[1]);
+        
         System.out.print("Linia: " + Integer.parseInt(coord[0]));
         System.out.println(" Coloana : " + Integer.parseInt(coord[1]));
+
+        clickedButton.setText(((isFirstPlayer == true) ? "X" : "0"));
+        shouldMove = false;
         
-        String buttonLabel = clickedButton.getText();
-
-        if ("".equals(buttonLabel) && isFirstPlayer)
-        {
-            
-            clickedButton.setText("X");
-            playerTurn.setText("PLAYER 2");
-            itsAMatch();
-            noWinner();
-            isFirstPlayer = false;
-
-        } 
-        else
-        {
-            if("".equals(buttonLabel) && !isFirstPlayer)
-            {
-                 
-                clickedButton.setText("0");
-                itsAMatch();
-                isFirstPlayer = true;
-            }
-        }
+        mainController.sendMessage(Messages.getMoveMessage(row, col, usernameLabel.getText(), oponentLabel.getText()));
     }
     
     private boolean noWinner()
@@ -271,13 +276,108 @@ public class GamePageController implements Initializable
     @FXML
     void back(ActionEvent event)
     {
+        mainController.sendMessage(Messages.getLogoutMessage(usernameLabel.getText()));
         mainController.showFirstPage();
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        // TODO
+        buttons = new Button[3][3];
+        buttons[0][0] = b11;
+        buttons[0][1] = b12;
+        buttons[0][2] = b13;
+        buttons[1][0] = b21;
+        buttons[1][1] = b22;
+        buttons[1][2] = b23;
+        buttons[2][0] = b31;
+        buttons[2][1] = b32;
+        buttons[2][2] = b33;
     }    
     
+    public void setStats(String username, int played, int won, int draws)
+    {
+        usernameLabel.setText(username);
+        oponentLabel.setText("");
+        gamesPlayed.setText("Played: " + played);
+        gamesWon.setText("Won: " + won);
+        drawGames.setText("Draws: " + draws);
+    }
+    
+    public void newIntivation(String username)
+    {
+        invitationLabel.setText(username);
+        acceptButton.setDisable(false);
+        declineButton.setDisable(false);
+    }
+    
+    @FXML public void onClickSubmitButton(ActionEvent event) 
+    {
+        mainController.sendMessage(Messages.getRequestGameMessage(usernameLabel.getText(), insertOponent.getText()));
+    }
+    
+    @FXML public void onClickAccept(ActionEvent event)
+    {
+        acceptButton.setDisable(true);
+        declineButton.setDisable(true);
+        isFirstPlayer = decideFirstPlayer();
+        shouldMove = isFirstPlayer;
+        oponentLabel.setText(invitationLabel.getText());
+        
+        if (isFirstPlayer)
+        {
+            firstPlayerLabel.setText("First Player");
+        }
+        else 
+        {
+            firstPlayerLabel.setText("Second Player");
+        }
+        
+        mainController.sendMessage(Messages.getResponseGameRequestMessage(true, !isFirstPlayer, usernameLabel.getText(), invitationLabel.getText()));
+    }
+    
+    @FXML public void onClickDecline(ActionEvent event)
+    {
+        acceptButton.setDisable(true);
+        declineButton.setDisable(true);
+        mainController.sendMessage(Messages.getResponseGameRequestMessage(true, false, usernameLabel.getText(), invitationLabel.getText()));
+    }
+    
+    public void setFeedbackLabelText(String text)
+    {
+        feedBackLabel.setText(text);
+    }
+    
+    public void responseFromUser(String username, boolean accept, boolean firstPlayer)
+    {
+        if (accept)
+        {
+            oponentLabel.setText(username);
+            isFirstPlayer = firstPlayer;
+            shouldMove = isFirstPlayer;
+            if (isFirstPlayer)
+            {
+                firstPlayerLabel.setText("First Player");
+            }
+            else 
+            {
+                firstPlayerLabel.setText("Second Player");
+            }
+        }
+        else 
+        {
+            feedBackLabel.setText(username + " declined your invitation");
+        }
+    }
+    
+    public void playerMadeAMove(int row, int col)
+    {
+        buttons[row-1][col-1].setText(((isFirstPlayer == true) ? "0" : "X"));
+        shouldMove = true;
+    }
+    
+    private boolean decideFirstPlayer()
+    {     
+        return (new Random().nextInt() == 0);
+    }
 }

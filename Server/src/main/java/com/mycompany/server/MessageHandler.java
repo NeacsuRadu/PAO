@@ -31,7 +31,8 @@ public class MessageHandler implements Runnable
     static final private int IS_NOT_ONLINE = 70;
     static final private int IS_ALREADY_PLAYING = 71;
     static final private int PENDING_RESPONSE = 72;
-
+    static final private int REQUEST = 73;
+    
     static private MessageHandler instance;
     static public MessageHandler getInstance()
     {
@@ -148,11 +149,12 @@ public class MessageHandler implements Runnable
         return message.toString();
     }
     
-    private String gameRequestMessage(int errorCode, String username)
+    private String gameRequestMessage(int errorCode, String username_to, String username_from)
     {
         JSONObject data = new JSONObject();
         data.put("code", errorCode);
-        data.put("username", username);
+        data.put("from", username_from);
+        data.put("to", username_to);
         
         JSONObject message = new JSONObject();
         message.put("type", GAME_REQUEST);
@@ -173,7 +175,7 @@ public class MessageHandler implements Runnable
         {
             case LOGIN:
             {
-                System.out.println("LOGIN message");
+                //System.out.println("LOGIN message");
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 String username = messageData.getString("username");
                 String password = messageData.getString("password");
@@ -181,19 +183,20 @@ public class MessageHandler implements Runnable
                 boolean isValidCombination = UserDataBase.getInstance().checkCredentials(username, password);
                 if (isValidCombination)
                 {
-                    System.out.println("LOGIN message - valid combination");
+                    //System.out.println("LOGIN message - valid combination");
                     task.getSender().SendMessage(getUserData(username));
+                    Server.getInstance().userConnected(username, task.getSender());
                 }
                 else
                 {
-                    System.out.println("LOGIN message - invalid combination");
+                    //System.out.println("LOGIN message - invalid combination");
                     task.getSender().SendMessage(invalidLoginMessage());
                 }
                 break;
             }
             case REGISTER: 
             { 
-                System.out.println("REGISTER message");
+                //System.out.println("REGISTER message");
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 String username = messageData.getString("username");
                 String email = messageData.getString("email");
@@ -201,7 +204,7 @@ public class MessageHandler implements Runnable
                 boolean alreadyRegistered = UserDataBase.getInstance().isAlreadyRegistered(username, email); 
                 if (!alreadyRegistered)
                 {
-                    System.out.println("REGISTER message is not registered yet");
+                    //System.out.println("REGISTER message is not registered yet");
                     // insert user into the data base :D 
                     UserData user = new UserData(
                             messageData.getString("firstname"),
@@ -217,6 +220,7 @@ public class MessageHandler implements Runnable
             }
             case LOGOUT:
             {
+                System.out.println("LOGOUT message");
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 Server.getInstance().userDisconnected(messageData.getString("username"));
                 break;
@@ -229,18 +233,21 @@ public class MessageHandler implements Runnable
                 
                 if (!UserDataBase.getInstance().isRegistered(username_to))
                 {
-                    task.getSender().SendMessage(gameRequestMessage(DOES_NOT_EXISTS, username_to));
+                    task.getSender().SendMessage(gameRequestMessage(DOES_NOT_EXISTS, username_to, username_from));
+                    break;
                 }
                 if (!Server.getInstance().checkOnlineUser(username_to))
                 {
-                    task.getSender().SendMessage(gameRequestMessage(IS_NOT_ONLINE, username_to));
+                    task.getSender().SendMessage(gameRequestMessage(IS_NOT_ONLINE, username_to, username_from));
+                    break;
                 }
                 if (Server.getInstance().isUserPlaying(username_to))
                 {
-                    task.getSender().SendMessage(gameRequestMessage(IS_ALREADY_PLAYING, username_to));
+                    task.getSender().SendMessage(gameRequestMessage(IS_ALREADY_PLAYING, username_to, username_from));
+                    break;
                 }
-                task.getSender().SendMessage(gameRequestMessage(PENDING_RESPONSE, username_to));
-                Server.getInstance().sendMessage(username_to, task.getMessage());
+                task.getSender().SendMessage(gameRequestMessage(PENDING_RESPONSE, username_to, username_from));
+                Server.getInstance().sendMessage(username_to, gameRequestMessage(REQUEST, username_to, username_from));
                 break;
             }
             case GAME_RESPONSE:

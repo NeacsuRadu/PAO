@@ -17,6 +17,11 @@ public interface MainController
     
     public void sendMessage(String message);
     
+    public UserData getUserData();
+    public void setUserData(UserData userData);
+    
+    public void oponentDisconnected();
+    
     public void invaliCredentials();
     public void loginSuccessful(UserData userData);
     public void failderRegistration();
@@ -27,7 +32,9 @@ public interface MainController
     public void setUserIsAlreadyPlayingText(String username);
     public void setWaitingResponseFromUserText(String username);
     
-    public void responseFromUser(String username, boolean accept);
+    public void showRequestDialog(String username);
+    
+    public void responseFromUser(String username, boolean accept, boolean firstPlayer);
     
     public void playerMadeAMove(int row, int col);
 }

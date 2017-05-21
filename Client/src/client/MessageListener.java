@@ -104,22 +104,30 @@ public class MessageListener implements Runnable
                 }
                 break;
             }
+            case Messages.LOGOUT:
+            {
+                JSONObject messageData = messageJSON.getJSONObject("data");
+                String username = messageData.getString("username");
+                controller.oponentDisconnected();
+                break;
+            }
             case Messages.GAME_REQUEST:
             {
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 
                 int code = messageData.getInt("code");
-                if (code == Messages.DOES_NOT_EXISTS) controller.setUserDoesNotExistsText(messageData.getString("username"));
-                else if (code == Messages.IS_NOT_ONLINE) controller.setUserInNotOnlineText(messageData.getString("username"));
-                else if (code == Messages.IS_ALREADY_PLAYING) controller.setUserIsAlreadyPlayingText(messageData.getString("username"));
-                else if (code == Messages.PENDING_RESPONSE) controller.setWaitingResponseFromUserText(messageData.getString("username"));
+                if (code == Messages.DOES_NOT_EXISTS) controller.setUserDoesNotExistsText(messageData.getString("to"));
+                else if (code == Messages.IS_NOT_ONLINE) controller.setUserInNotOnlineText(messageData.getString("to"));
+                else if (code == Messages.IS_ALREADY_PLAYING) controller.setUserIsAlreadyPlayingText(messageData.getString("to"));
+                else if (code == Messages.PENDING_RESPONSE) controller.setWaitingResponseFromUserText(messageData.getString("to"));
+                else if (code == Messages.REQUEST) controller.showRequestDialog(messageData.getString("from"));
                 break;
             }
             case Messages.GAME_RESPONSE:
             {
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 
-                controller.responseFromUser(messageData.getString("from"), messageData.getBoolean("accept"));
+                controller.responseFromUser(messageData.getString("from"), messageData.getBoolean("accept"), messageData.getBoolean("firstplayer"));
                 
                 break;
             }

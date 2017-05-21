@@ -33,6 +33,8 @@ public class Client extends Application implements MainController
     
     private ClientSocket clientSocket;
     
+    private UserData userData;
+    
     public boolean initialize()
     {
         boolean bRet = true;
@@ -93,18 +95,21 @@ public class Client extends Application implements MainController
         primaryStage.show();
     }
     
+    @Override
     public void showRegisterPage()
     {
         primaryStage.setScene(registerPageScene);
         primaryStage.show();
     }
     
+    @Override
     public void showFirstPage()
     {
         primaryStage.setScene(firstPageScene);
         primaryStage.show();
     }
     
+    @Override
     public void showGamePage()
     {
         primaryStage.setScene(gamePageScene);
@@ -120,6 +125,18 @@ public class Client extends Application implements MainController
     
     // ------------------------- MAIN CONTROOLER IMPLEMENTATION -------------------------
     
+    @Override
+    public UserData getUserData()
+    {
+        return userData;
+    }
+    
+    @Override
+    public void setUserData(UserData userData)
+    {
+        this.userData = userData;
+    }
+    
     @Override 
     public void sendMessage(String message)
     {
@@ -130,7 +147,11 @@ public class Client extends Application implements MainController
     @Override
     public void invaliCredentials()
     {
-        firstPageController.showInvalideUsernamePasswordCombination();
+        Platform.runLater(
+        ()->
+        {
+            firstPageController.showInvalideUsernamePasswordCombination();
+        });
     }
     
     @Override
@@ -140,6 +161,8 @@ public class Client extends Application implements MainController
         () -> 
         {
             System.out.println("altceva");
+            this.userData = userData;
+            this.gamePageController.setStats(userData.getUsername(), userData.getNumberOfGamesPlayed(), userData.getNumberOfWins(), userData.getNumberOfDraws());
             this.showGamePage();
         });
     }
@@ -147,7 +170,11 @@ public class Client extends Application implements MainController
     @Override
     public void failderRegistration()
     {
-        registerPageController.showRegistrationFailedLabel();
+        Platform.runLater(
+        ()->      
+        {
+            registerPageController.showRegistrationFailedLabel();
+        });
     }
     
     @Override
@@ -164,37 +191,78 @@ public class Client extends Application implements MainController
     @Override
     public void setUserDoesNotExistsText(String username)
     {
-        // tell him the user he entered does not exists 
+        Platform.runLater(
+        ()->
+        {
+            gamePageController.setFeedbackLabelText(username + " is not a valid username");
+        }); 
     }
     
     @Override
     public void setUserInNotOnlineText(String username)
     {
-        // tell him the user he entered does not existts
+        Platform.runLater(
+        ()->
+        {
+            gamePageController.setFeedbackLabelText(username + " is not online right now");
+        });
     }
     
     @Override
     public void setUserIsAlreadyPlayingText(String username)
     {
-        // tell him the user he entered is already playing 
+        Platform.runLater(
+        ()->
+        {
+            gamePageController.setFeedbackLabelText(username + " is already in a game");
+        });
     }
     
     @Override
     public void setWaitingResponseFromUserText(String username)
     {
-        // the user he entered was notified, need to wait confirmation 
+        Platform.runLater(
+        ()->
+        {
+            gamePageController.setFeedbackLabelText(username + " has been notified");
+        });
     }
     
     @Override
-    public void responseFromUser(String username, boolean accept)
+    public void showRequestDialog(String username)
     {
-        // some response for the request made earlier 
+        Platform.runLater(
+        ()->
+        {
+            gamePageController.newIntivation(username);
+        });
+    }
+    
+    @Override
+    public void oponentDisconnected()
+    {
+        
+    }
+    
+    @Override
+    public void responseFromUser(String username, boolean accept, boolean firstPlayer)
+    {
+        Platform.runLater(
+        ()->{
+            gamePageController.responseFromUser(username, accept, firstPlayer);
+        });
     }
     
     @Override
     public void playerMadeAMove(int row, int col)
     {
-        // a move was made, need to update :) s
+        Platform.runLater(
+        ()->
+        {
+            gamePageController.playerMadeAMove(row, col);
+        });
+        
+        
     }
     
 }
