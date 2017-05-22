@@ -127,7 +127,7 @@ public class MessageListener implements Runnable
             {
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 
-                controller.responseFromUser(messageData.getString("from"), messageData.getBoolean("accept"), messageData.getBoolean("firstplayer"));
+                controller.responseFromUser(messageData.getString("from"), messageData.getBoolean("accept"));
                 
                 break;
             }
@@ -136,6 +136,20 @@ public class MessageListener implements Runnable
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 
                 controller.playerMadeAMove(messageData.getInt("row"), messageData.getInt("col"));
+                
+                break;
+            }
+            case Messages.START_GAME:
+            {
+                JSONObject messageData = messageJSON.getJSONObject("data");
+                
+                int code = messageData.getInt("code");
+                if (code == Messages.IS_NOT_ONLINE) controller.playerIsNotOnlineAnyMore(messageData.getString("username"));
+                else if (code == Messages.IS_ALREADY_PLAYING) controller.playerEnteredAGame(messageData.getString("username"));
+                else if (code == Messages.ALL_GOOD_MAN) 
+                {
+                    controller.startTheGame(messageData.getString("username"), messageData.getBoolean("firstplayer"));
+                }
                 
                 break;
             }

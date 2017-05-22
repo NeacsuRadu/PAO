@@ -257,11 +257,12 @@ public class Client extends Application implements MainController
     }
     
     @Override
-    public void responseFromUser(String username, boolean accept, boolean firstPlayer)
+    public void responseFromUser(String username, boolean accept)
     {
         Platform.runLater(
-        ()->{
-            gamePageController.responseFromUser(username, accept, firstPlayer);
+        ()->
+        {    
+            gamePageController.responseFromUser(username, accept);
         });
     }
     
@@ -273,8 +274,35 @@ public class Client extends Application implements MainController
         {
             gamePageController.playerMadeAMove(row, col);
         });
-        
-        
     }
     
+    @Override
+    public void playerIsNotOnlineAnyMore(String username)
+    {
+        Platform.runLater(
+        ()->
+        {
+            gamePageController.setResponseErrorText(username + " is not online anymore.");
+        });     
+    }
+    
+    @Override
+    public void playerEnteredAGame(String username)
+    {
+        Platform.runLater(
+        ()->
+        {
+            gamePageController.setResponseErrorText(username + " entered a game.");
+        });     
+    }
+    
+    @Override
+    public void startTheGame(String username, boolean firstPlayer)
+    {
+        Platform.runLater(
+        ()->
+        {
+            gamePageController.startTheGame(username, firstPlayer);
+        }); 
+    }
 }

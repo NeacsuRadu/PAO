@@ -36,7 +36,11 @@ public interface MainController
     
     public void showRequestDialog(String username);
     
-    public void responseFromUser(String username, boolean accept, boolean firstPlayer);
+    public void responseFromUser(String username, boolean accept);
     
     public void playerMadeAMove(int row, int col);
+    
+    public void playerIsNotOnlineAnyMore(String username);
+    public void playerEnteredAGame(String username);
+    public void startTheGame(String username, boolean firstPlayer);
 }

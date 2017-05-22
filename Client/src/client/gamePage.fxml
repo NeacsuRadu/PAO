@@ -145,5 +145,6 @@
          </effect>
       </Label>
       <Button fx:id="newGame" layoutX="590.0" layoutY="348.0" mnemonicParsing="false" onAction="#newgame" prefHeight="32.0" prefWidth="141.0" text="New Game" visible="false" />
+      <Label fx:id="responseErrorLabel" layoutX="567.0" layoutY="513.0" prefHeight="21.0" prefWidth="188.0" />
    </children>
 </AnchorPane>
