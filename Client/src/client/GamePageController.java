@@ -81,8 +81,8 @@ public class GamePageController implements Initializable
     @FXML
     void newgame(ActionEvent event) 
     {
-        mainController.showGamePage();
         initGamePage();
+        updateStats();
     }
     
     @FXML
@@ -104,13 +104,11 @@ public class GamePageController implements Initializable
         if (iWon)
         {
             updateWins();
-            updateStats();
             newGame.setVisible(true);
         }
         else if (noWinner())
         {
             updateDraws();
-            updateStats();
             newGame.setVisible(true);
         }
     }
@@ -378,7 +376,6 @@ public class GamePageController implements Initializable
         if (heWins)
         {
             updatePlayed();
-            updateStats();
             newGame.setVisible(true);
             shouldMove = false;
             return;
@@ -386,7 +383,6 @@ public class GamePageController implements Initializable
         else if (noWinner())
         {
             updateDraws();
-            updateStats();
             newGame.setVisible(true);
             shouldMove = false;
             return;
