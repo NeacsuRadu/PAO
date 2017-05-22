@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 
@@ -48,6 +49,7 @@ public class GamePageController implements Initializable
     @FXML private Button newGame;
     @FXML private Label lb1;
     @FXML private Label lb3;
+    @FXML private Label user;
     
     @FXML private Label usernameLabel;
     @FXML private Label oponentLabel;
@@ -291,6 +293,7 @@ public class GamePageController implements Initializable
         gamesPlayed.setText("" + played);
         gamesWon.setText("" + won);
         drawGames.setText("" + draws);
+        user.setText(username);
     }
     
     public void newIntivation(String username)
@@ -334,13 +337,14 @@ public class GamePageController implements Initializable
     
     public void setFeedbackLabelText(String text)
     {
-        feedBackLabel.setText(text);
+        feedBackLabel.setText(text);        
     }
     
     public void responseFromUser(String username, boolean accept, boolean firstPlayer)
     {
         if (accept)
         {
+            // adica aici. ii curatam butoanele alea 
             oponentLabel.setText(username);
             isFirstPlayer = firstPlayer;
             shouldMove = isFirstPlayer;

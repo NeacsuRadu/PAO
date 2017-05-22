@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="591.0" prefWidth="817.0" style="-fx-background-color: #D3D3D3;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.GamePageController">
+<AnchorPane id="AnchorPane" prefHeight="591.0" prefWidth="714.0" style="-fx-background-color: #D3D3D3;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.GamePageController">
    <children>
       <GridPane layoutX="43.0" layoutY="106.0" prefHeight="451.0" prefWidth="450.0">
         <columnConstraints>
@@ -70,47 +70,63 @@
             </Button>
          </children>
       </GridPane>
-      <Label fx:id="lb3" alignment="TOP_RIGHT" layoutX="685.0" layoutY="190.0" text="TURN.">
+      <Label fx:id="lb3" alignment="TOP_RIGHT" layoutX="295.0" layoutY="81.0" text="TURN.">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lb1" alignment="TOP_RIGHT" layoutX="586.0" layoutY="190.0" text="IT'S ">
+      <Label fx:id="lb1" alignment="TOP_RIGHT" layoutX="196.0" layoutY="81.0" text="IT'S ">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="playerTurn" alignment="CENTER" layoutX="605.0" layoutY="190.0" prefHeight="20.0" prefWidth="87.0" text="PLAYER 1">
+      <Label fx:id="playerTurn" alignment="CENTER" layoutX="215.0" layoutY="81.0" prefHeight="20.0" prefWidth="87.0" text="PLAYER 1">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="backBt" layoutX="609.0" layoutY="532.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="97.0" text="Exit" />
-      <Label fx:id="usernameLabel" layoutX="256.0" layoutY="36.0" prefHeight="45.0" prefWidth="133.0" text="Jucatorul 1">
+      <Label fx:id="usernameLabel" layoutX="43.0" layoutY="36.0" prefHeight="45.0" prefWidth="133.0" text="Jucatorul 1">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="430.0" layoutY="50.0" text="VS" />
-      <Label fx:id="oponentLabel" layoutX="498.0" layoutY="43.0" prefHeight="25.0" prefWidth="150.0" text="Jucatorul 2">
+      <Label layoutX="254.0" layoutY="51.0" text="VS" />
+      <Label fx:id="oponentLabel" layoutX="348.0" layoutY="43.0" prefHeight="25.0" prefWidth="150.0" text="Jucatorul 2">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="gamesPlayed" layoutX="70.0" layoutY="7.0" prefHeight="25.0" prefWidth="80.0" />
-      <Label fx:id="gamesWon" layoutX="70.0" layoutY="34.0" prefHeight="25.0" prefWidth="80.0" />
-      <Label fx:id="drawGames" layoutX="70.0" layoutY="59.0" prefHeight="25.0" prefWidth="80.0" />
-      <Label layoutX="517.0" layoutY="253.0" prefHeight="21.0" prefWidth="108.0" text="Insert oponent:" />
-      <TextField fx:id="insertOponent" layoutX="625.0" layoutY="248.0" />
-      <Button fx:id="submitButton" layoutX="734.0" layoutY="287.0" mnemonicParsing="false" onAction="#onClickSubmitButton" text="Submit" />
-      <Label fx:id="feedBackLabel" layoutX="500.0" layoutY="339.0" prefHeight="21.0" prefWidth="306.0" />
-      <Label fx:id="invitationLabel" layoutX="644.0" layoutY="374.0" prefHeight="21.0" prefWidth="150.0" />
-      <Button fx:id="acceptButton" disable="true" layoutX="554.0" layoutY="411.0" mnemonicParsing="false" onAction="#onClickAccept" text="Accept" />
-      <Button fx:id="declineButton" disable="true" layoutX="672.0" layoutY="411.0" mnemonicParsing="false" onAction="#onClickDecline" text="Decline" />
-      <Label layoutX="509.0" layoutY="374.0" prefHeight="21.0" prefWidth="124.0" text="Invitation from:" />
-      <Label fx:id="firstPlayerLabel" layoutX="552.0" layoutY="126.0" prefHeight="21.0" prefWidth="172.0" />
-      <Label layoutX="19.0" layoutY="7.0" prefHeight="25.0" prefWidth="53.0" text="Played : " />
-      <Label layoutX="19.0" layoutY="34.0" prefHeight="25.0" prefWidth="53.0" text="Won : " />
-      <Label layoutX="19.0" layoutY="59.0" prefHeight="25.0" prefWidth="53.0" text="Draws :" />
+      <AnchorPane layoutX="637.0" layoutY="-1.0" prefHeight="154.0" prefWidth="172.0" style="-fx-background-color: grey;">
+         <children>
+            <Label fx:id="gamesPlayed" layoutX="65.0" layoutY="52.0" prefHeight="25.0" prefWidth="80.0" />
+            <Label fx:id="gamesWon" layoutX="65.0" layoutY="79.0" prefHeight="25.0" prefWidth="80.0" />
+            <Label fx:id="drawGames" layoutX="65.0" layoutY="104.0" prefHeight="25.0" prefWidth="80.0" />
+            <Label layoutX="14.0" layoutY="52.0" prefHeight="25.0" prefWidth="53.0" text="Played : " />
+            <Label layoutX="14.0" layoutY="79.0" prefHeight="25.0" prefWidth="53.0" text="Won : " />
+            <Button fx:id="backBt" layoutX="105.0" layoutY="128.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="67.0" text="Log out" />
+            <Label layoutX="14.0" layoutY="104.0" prefHeight="25.0" prefWidth="53.0" text="Draws :" />
+            <Label fx:id="user" layoutX="22.0" layoutY="14.0" prefHeight="32.0" prefWidth="141.0" text="user name">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="invite" layoutX="519.0" layoutY="237.0" prefHeight="79.0" prefWidth="243.0" style="-fx-background-color: grey;">
+         <children>
+            <TextField fx:id="insertOponent" layoutX="14.0" layoutY="40.0" promptText="Insert oponent username" />
+            <Button fx:id="submitButton" layoutX="171.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickSubmitButton" text="Invite" />
+            <Label fx:id="feedBackLabel" layoutX="28.0" layoutY="8.0" prefHeight="25.0" prefWidth="188.0" text="Invite oponent !" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="533.0" layoutY="357.0" prefHeight="110.0" prefWidth="215.0" style="-fx-background-color: grey;">
+         <children>
+            <Label layoutX="13.0" layoutY="14.0" prefHeight="21.0" prefWidth="124.0" text="Invitation from:" />
+            <Button fx:id="acceptButton" disable="true" layoutX="14.0" layoutY="71.0" mnemonicParsing="false" onAction="#onClickAccept" prefHeight="25.0" prefWidth="56.0" text="Accept" />
+            <Button fx:id="declineButton" disable="true" layoutX="145.0" layoutY="71.0" mnemonicParsing="false" onAction="#onClickDecline" text="Decline" />
+            <Label fx:id="invitationLabel" layoutX="94.0" layoutY="14.0" prefHeight="21.0" prefWidth="102.0" />
+         </children>
+      </AnchorPane>
+      <Label fx:id="firstPlayerLabel" layoutX="555.0" layoutY="183.0" prefHeight="21.0" prefWidth="172.0" text="You are player..." />
    </children>
 </AnchorPane>
