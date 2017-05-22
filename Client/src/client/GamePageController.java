@@ -421,4 +421,9 @@ public class GamePageController implements Initializable
                                                                           mainController.getUserData().getNumberOfWins(),
                                                                           mainController.getUserData().getNumberOfDraws()));
     }
+    
+    private void initGamePage() // in asta setam butoanele pe enabled ca la inceput, le dam la toate acealsi stil, si punem shoudld move si isFirstPlayer pe false :D 
+    {
+        
+    }
 }

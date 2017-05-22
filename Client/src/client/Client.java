@@ -115,7 +115,7 @@ public class Client extends Application implements MainController
     public void showGamePage()
     {
         primaryStage.setScene(gamePageScene);
-        //cleanUp
+        //cleanUp si aici :) 
         primaryStage.show();
     }
 
