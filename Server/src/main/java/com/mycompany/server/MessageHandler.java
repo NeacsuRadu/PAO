@@ -254,21 +254,13 @@ public class MessageHandler implements Runnable
             {
                 JSONObject messageData = messageJSON.getJSONObject("data");
                 String username_to = messageData.getString("to");
-                
-                /*if (!Server.getInstance().checkOnlineUser(username_to) && accept)
+                String username_from = messageData.getString("from");
+                boolean accept = messageData.getBoolean("accept");
+                if (accept)
                 {
-                    task.getSender().SendMessage("");
-                    task.getSender().setPlayState(false);
+                    Server.getInstance().setPlayState(username_to, accept);
+                    Server.getInstance().setPlayState(username_from, accept);
                 }
-                if (Server.getInstance().isUserPlaying(username_to) && accept)
-                {
-                    task.getSender().SendMessage("");
-                    task.getSender().setPlayState(false);
-                }
-                if (!Server.getInstance().isUserPlaying(username_to))
-                {
-                    Server.getInstance().sendMessage(username_to, task.getMessage());
-                }*/
                 Server.getInstance().sendMessage(username_to, task.getMessage());
                 
                 break;
@@ -291,6 +283,7 @@ public class MessageHandler implements Runnable
                         messageData.getInt("played")
                 );
                 UserDataBase.getInstance().updateUser(userData);
+                Server.getInstance().setPlayState(messageData.getString("username"), false);
                 break;
             }
             default:

@@ -123,6 +123,6 @@ public class Messages
         JSONObject messageJSON = new JSONObject();
         messageJSON.put("type", UPDATE_USER_DATA);
         messageJSON.put("data", messageData);
-        return messageData.toString();
+        return messageJSON.toString();
     }
 }
