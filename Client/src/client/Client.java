@@ -82,7 +82,7 @@ public class Client extends Application implements MainController
         return bRet;
     }
     
-     @Override
+    @Override
     public void start(Stage primaryStage)
     {    
         this.primaryStage = primaryStage;
@@ -92,7 +92,14 @@ public class Client extends Application implements MainController
         this.primaryStage.setTitle("Fucking tic tac toe");
         this.primaryStage.setResizable(false);
         primaryStage.setScene(firstPageScene);
+        firstPageController.cleanUp();
         primaryStage.show();
+    }
+    
+    @Override
+    public boolean isClientConnected()
+    {
+        return (clientSocket != null);
     }
     
     @Override
@@ -143,6 +150,8 @@ public class Client extends Application implements MainController
     @Override 
     public void sendMessage(String message)
     {
+        if (clientSocket == null)
+            return;
         System.out.println("Sending message: " + message);
         clientSocket.sendMessage(message);
     }

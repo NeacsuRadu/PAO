@@ -33,6 +33,7 @@ public class FirstPageController implements Initializable {
     @FXML private PasswordField password;
     @FXML private Label warning;   
     @FXML private Label emptyField; 
+    @FXML private Label notConnectedLabel;
     @FXML private Button signIn;
     @FXML private Button signUp;
     
@@ -79,5 +80,18 @@ public class FirstPageController implements Initializable {
         
         warning.setVisible(false);
         emptyField.setVisible(false);
+        if (mainController.isClientConnected())
+        {
+            notConnectedLabel.setVisible(false);
+        }
+        else
+        {
+            notConnectedLabel.setVisible(true);
+        }
+    }
+    
+    public void setNotConnectedText()
+    {
+        notConnectedLabel.setVisible(true);
     }
 }

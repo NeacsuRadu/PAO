@@ -46,6 +46,7 @@
                   <Label fx:id="passConfirm" layoutX="33.0" layoutY="209.0" prefHeight="25.0" prefWidth="161.0" text="Password doesn't match." textFill="#f20a0a" visible="false" />
                </children>
             </AnchorPane>
+            <Label fx:id="notConnectedLabel" layoutX="372.0" layoutY="526.0" prefHeight="21.0" prefWidth="362.0" text="NOT CONNECTED!! PAY YOUR NET!!" textFill="RED" />
          </children>
       </AnchorPane>
    </children>

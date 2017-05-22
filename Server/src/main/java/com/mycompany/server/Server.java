@@ -47,6 +47,8 @@ public class Server implements ClientEvents
     
     public void setPlayState(String username, boolean playState)
     {
+        if (users.get(username) == null)
+            return;
         users.get(username).setPlayState(playState);
     }
     

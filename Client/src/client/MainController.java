@@ -11,6 +11,8 @@ package client;
  */
 public interface MainController 
 {
+    public boolean isClientConnected();
+    
     public void showRegisterPage();
     public void showFirstPage();
     public void showGamePage();

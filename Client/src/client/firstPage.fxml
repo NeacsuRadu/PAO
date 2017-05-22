@@ -73,6 +73,7 @@
                   <DropShadow />
                </effect>
             </Label>
+            <Label fx:id="notConnectedLabel" layoutX="128.0" layoutY="483.0" prefHeight="21.0" prefWidth="370.0" text="PAY YOUR NET!!" textFill="RED" />
          </children>
       </AnchorPane>
    </children>

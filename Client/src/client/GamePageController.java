@@ -255,19 +255,6 @@ public class GamePageController implements Initializable
         b1.setStyle(style);
         b2.setStyle(style);
         b3.setStyle(style);
-        //"-fx-background-color: #FFD700;"
-        /*if(b1.getText().equals("X"))
-        {
-            lb1.setText("");
-            playerTurn.setText("PLAYER 1");
-            lb3.setText(" WON !");
-        }
-        else
-        {
-            lb1.setText("");
-            playerTurn.setText("PLAYER 2");
-            lb3.setText(" WON !");
-        }*/
     }
     
     @FXML
@@ -481,13 +468,15 @@ public class GamePageController implements Initializable
         
         isFirstPlayer = false;
         shouldMove = false;
+        
         newGame.setVisible(false);
         gameDetails.setVisible(false);
         invite.setVisible(true);
         inviteMess.setVisible(true);
+        gameAnch.setVisible(false);
         feedBackLabel.setText("Invite oponent !");
         invitationLabel.setText("");
         insertOponent.setText("");
-        
+        title.setVisible(true);
     }
 }

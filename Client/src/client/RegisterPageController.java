@@ -38,6 +38,7 @@ public class RegisterPageController implements Initializable {
     @FXML private Label emptyField;
     @FXML private Label emailCf;
     @FXML private Label registrationFailed;
+    @FXML private Label notConnectedLabel;
     @FXML private TextField firstName;
     @FXML private TextField lastName;
     @FXML private TextField email;
@@ -135,6 +136,19 @@ public class RegisterPageController implements Initializable {
         passConfirm.setVisible(false);
         emailCf.setVisible(false);
         registrationFailed.setVisible(false);
+        if (mainController.isClientConnected())
+        {
+            notConnectedLabel.setVisible(false);
+        }
+        else
+        {
+            notConnectedLabel.setVisible(true);
+        }
+    }
+    
+    public void setNotConnectedText()
+    {
+        notConnectedLabel.setVisible(true);
     }
     
 }
