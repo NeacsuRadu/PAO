@@ -75,5 +75,18 @@ public class UserData
         return numberOfGamesPlayed;
     }
     
+    public void increaseWins()
+    {
+        this.numberOfWins++;
+    }
     
+    public void increaseDraws()
+    {
+        this.numberOfDraws++;
+    }
+    
+    public void increasePlayed()
+    {
+        this.numberOfGamesPlayed++;
+    }
 }
