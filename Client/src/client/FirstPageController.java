@@ -69,4 +69,13 @@ public class FirstPageController implements Initializable {
     {
         warning.setVisible(true);
     }
+    
+    public void cleanUp()
+    {
+        username.setText("");
+        password.setText("");
+        
+        warning.setVisible(false);
+        emptyField.setVisible(false);
+    }
 }

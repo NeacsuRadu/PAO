@@ -36,12 +36,16 @@
                </font>
             </Label>
             <Button fx:id="backBt" alignment="CENTER" layoutX="232.0" layoutY="458.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="89.0" text="Back" />
-            <Label fx:id="passLength" layoutX="590.0" layoutY="355.0" prefHeight="25.0" prefWidth="192.0" text="Password must be 8 characters." textFill="#e81313" visible="false" />
-            <Label fx:id="passConfirm" layoutX="590.0" layoutY="410.0" prefHeight="25.0" prefWidth="161.0" text="Password doesn't match." textFill="#f20a0a" visible="false" />
-            <Label fx:id="emptyField" layoutX="231.0" layoutY="435.0" prefHeight="17.0" prefWidth="291.0" text="All fields must be completed." textFill="RED" visible="false" />
-            <Label fx:id="usernameTaken" layoutX="595.0" layoutY="305.0" prefHeight="25.0" prefWidth="161.0" text="Username already taken." textFill="#f20909" visible="false" />
-            <Label fx:id="emailCf" layoutX="588.0" layoutY="255.0" prefHeight="25.0" prefWidth="126.0" text="Invalid email address." textFill="#ee0909" visible="false" />
-            <Label fx:id="registrationFailed" layoutX="255.0" layoutY="516.0" prefHeight="21.0" prefWidth="291.0" text="  Failed, username of email already taken!" textFill="RED" />
+            <Label fx:id="emptyField" layoutX="244.0" layoutY="390.0" prefHeight="17.0" prefWidth="291.0" text="All fields must be completed." textFill="RED" visible="false" />
+            <VBox layoutX="40.0" layoutY="141.0" prefHeight="266.0" prefWidth="212.0" />
+            <AnchorPane layoutX="579.0" layoutY="141.0" prefHeight="239.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="registrationFailed" layoutX="31.0" layoutY="-2.0" prefHeight="32.0" prefWidth="212.0" text="Username or email already taken!" textFill="RED" />
+                  <Label fx:id="emailCf" layoutX="31.0" layoutY="85.0" prefHeight="25.0" prefWidth="126.0" text="Invalid email address." textFill="#ee0909" visible="false" />
+                  <Label fx:id="passLength" layoutX="32.0" layoutY="171.0" prefHeight="25.0" prefWidth="192.0" text="Password must be 8 characters." textFill="#e81313" visible="false" />
+                  <Label fx:id="passConfirm" layoutX="33.0" layoutY="209.0" prefHeight="25.0" prefWidth="161.0" text="Password doesn't match." textFill="#f20a0a" visible="false" />
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </children>

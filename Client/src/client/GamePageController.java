@@ -299,9 +299,9 @@ public class GamePageController implements Initializable
     {
         usernameLabel.setText(username);
         oponentLabel.setText("");
-        gamesPlayed.setText("Played: " + played);
-        gamesWon.setText("Won: " + won);
-        drawGames.setText("Draws: " + draws);
+        gamesPlayed.setText("" + played);
+        gamesWon.setText("" + won);
+        drawGames.setText("" + draws);
     }
     
     public void newIntivation(String username)

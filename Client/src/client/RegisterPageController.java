@@ -37,7 +37,6 @@ public class RegisterPageController implements Initializable {
     @FXML private Label passConfirm;
     @FXML private Label emptyField;
     @FXML private Label emailCf;
-    @FXML private Label usernameTaken;
     @FXML private Label registrationFailed;
     @FXML private TextField firstName;
     @FXML private TextField lastName;
@@ -76,8 +75,6 @@ public class RegisterPageController implements Initializable {
                     if(password.getText().equals(cfPassword.getText()))
                     {
                         mainController.sendMessage(Messages.getRegisterMessage(firstName.getText(), lastName.getText(), mail, username.getText(), password.getText()));
-                    //daca exista in baza de date
-                    //-> usernameTaken.setVisibility(true);
                     }
                     else
                     {   
@@ -122,6 +119,21 @@ public class RegisterPageController implements Initializable {
     public void showRegistrationFailedLabel()
     {
         registrationFailed.setVisible(true);
+    }
+ 
+    public void cleanUp()
+    {
+        firstName.setText("");
+        lastName.setText("");
+        username.setText("");
+        email.setText("");
+        password.setText("");
+        cfPassword.setText("");
+        
+        emptyField.setVisible(false);
+        passLength.setVisible(false);
+        passConfirm.setVisible(false);
+        emailCf.setVisible(false);
     }
     
 }

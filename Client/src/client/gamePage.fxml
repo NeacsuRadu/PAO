@@ -97,9 +97,9 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="gamesPlayed" layoutX="30.0" layoutY="14.0" prefHeight="21.0" prefWidth="150.0" />
-      <Label fx:id="gamesWon" layoutX="30.0" layoutY="40.0" prefHeight="21.0" prefWidth="150.0" />
-      <Label fx:id="drawGames" layoutX="30.0" layoutY="65.0" prefHeight="21.0" prefWidth="150.0" />
+      <Label fx:id="gamesPlayed" layoutX="70.0" layoutY="7.0" prefHeight="25.0" prefWidth="80.0" />
+      <Label fx:id="gamesWon" layoutX="70.0" layoutY="34.0" prefHeight="25.0" prefWidth="80.0" />
+      <Label fx:id="drawGames" layoutX="70.0" layoutY="59.0" prefHeight="25.0" prefWidth="80.0" />
       <Label layoutX="517.0" layoutY="253.0" prefHeight="21.0" prefWidth="108.0" text="Insert oponent:" />
       <TextField fx:id="insertOponent" layoutX="625.0" layoutY="248.0" />
       <Button fx:id="submitButton" layoutX="734.0" layoutY="287.0" mnemonicParsing="false" onAction="#onClickSubmitButton" text="Submit" />
@@ -107,7 +107,10 @@
       <Label fx:id="invitationLabel" layoutX="644.0" layoutY="374.0" prefHeight="21.0" prefWidth="150.0" />
       <Button fx:id="acceptButton" disable="true" layoutX="554.0" layoutY="411.0" mnemonicParsing="false" onAction="#onClickAccept" text="Accept" />
       <Button fx:id="declineButton" disable="true" layoutX="672.0" layoutY="411.0" mnemonicParsing="false" onAction="#onClickDecline" text="Decline" />
-      <Label layoutX="502.0" layoutY="374.0" prefHeight="21.0" prefWidth="124.0" text="Invitation from:" />
+      <Label layoutX="509.0" layoutY="374.0" prefHeight="21.0" prefWidth="124.0" text="Invitation from:" />
       <Label fx:id="firstPlayerLabel" layoutX="552.0" layoutY="126.0" prefHeight="21.0" prefWidth="172.0" />
+      <Label layoutX="19.0" layoutY="7.0" prefHeight="25.0" prefWidth="53.0" text="Played : " />
+      <Label layoutX="19.0" layoutY="34.0" prefHeight="25.0" prefWidth="53.0" text="Won : " />
+      <Label layoutX="19.0" layoutY="59.0" prefHeight="25.0" prefWidth="53.0" text="Draws :" />
    </children>
 </AnchorPane>

@@ -99,6 +99,7 @@ public class Client extends Application implements MainController
     public void showRegisterPage()
     {
         primaryStage.setScene(registerPageScene);
+        registerPageController.cleanUp(); 
         primaryStage.show();
     }
     
@@ -106,6 +107,7 @@ public class Client extends Application implements MainController
     public void showFirstPage()
     {
         primaryStage.setScene(firstPageScene);
+        firstPageController.cleanUp();
         primaryStage.show();
     }
     
@@ -113,6 +115,7 @@ public class Client extends Application implements MainController
     public void showGamePage()
     {
         primaryStage.setScene(gamePageScene);
+        //cleanUp
         primaryStage.show();
     }
 
