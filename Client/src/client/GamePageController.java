@@ -63,7 +63,12 @@ public class GamePageController implements Initializable
     @FXML private Button submitButton;
     @FXML private Button acceptButton;
     @FXML private Button declineButton;
-
+    @FXML private AnchorPane gameAnch;
+    @FXML private Label title;
+    @FXML private AnchorPane gameDetails;
+    @FXML private AnchorPane invite;
+    @FXML private AnchorPane inviteMess;
+    
     private boolean isFirstPlayer;
     private boolean shouldMove;
     private boolean inGame;
@@ -77,6 +82,7 @@ public class GamePageController implements Initializable
     void newgame(ActionEvent event) 
     {
         mainController.showGamePage();
+        initGamePage();
     }
     
     @FXML
@@ -99,11 +105,13 @@ public class GamePageController implements Initializable
         {
             updateWins();
             updateStats();
+            newGame.setVisible(true);
         }
         else if (noWinner())
         {
             updateDraws();
             updateStats();
+            newGame.setVisible(true);
         }
     }
     
@@ -314,13 +322,19 @@ public class GamePageController implements Initializable
         shouldMove = isFirstPlayer;
         oponentLabel.setText(invitationLabel.getText());
         
+        gameAnch.setVisible(true);
+        title.setVisible(false);
+        gameDetails.setVisible(true);
+        invite.setVisible(false);
+        inviteMess.setVisible(false);
+        
         if (isFirstPlayer)
         {
-            firstPlayerLabel.setText("First Player");
+            firstPlayerLabel.setText("You are Player1.");
         }
         else 
         {
-            firstPlayerLabel.setText("Second Player");
+            firstPlayerLabel.setText("You are Player2.");
         }
         
         mainController.sendMessage(Messages.getResponseGameRequestMessage(true, !isFirstPlayer, usernameLabel.getText(), invitationLabel.getText()));
@@ -342,17 +356,25 @@ public class GamePageController implements Initializable
     {
         if (accept)
         {
-            // adica aici. ii curatam butoanele alea 
+            // adica aici. ii curatam butoanele alea, o apelam aici 
+            initGamePage();
+            
+            gameAnch.setVisible(true);
+            title.setVisible(false);
+            gameDetails.setVisible(true);
+            invite.setVisible(false);
+            inviteMess.setVisible(false);
+        
             oponentLabel.setText(username);
             isFirstPlayer = firstPlayer;
             shouldMove = isFirstPlayer;
             if (isFirstPlayer)
             {
-                firstPlayerLabel.setText("First Player");
+                firstPlayerLabel.setText("You are Player1.");
             }
             else 
             {
-                firstPlayerLabel.setText("Second Player");
+                firstPlayerLabel.setText("You are Player2.");
             }
         }
         else 
@@ -365,10 +387,12 @@ public class GamePageController implements Initializable
     {
         buttons[row-1][col-1].setText(((isFirstPlayer == true) ? "0" : "X"));
         boolean heWins = itsAMatch(((isFirstPlayer == true) ? "0" : "X"), "-fx-background-color: #FF0000;");
+        
         if (heWins)
         {
             updatePlayed();
             updateStats();
+            newGame.setVisible(true);
             shouldMove = false;
             return;
         }
@@ -376,6 +400,7 @@ public class GamePageController implements Initializable
         {
             updateDraws();
             updateStats();
+            newGame.setVisible(true);
             shouldMove = false;
             return;
         }
@@ -424,6 +449,45 @@ public class GamePageController implements Initializable
     
     private void initGamePage() // in asta setam butoanele pe enabled ca la inceput, le dam la toate acealsi stil, si punem shoudld move si isFirstPlayer pe false :D 
     {
+        b11.setDisable(false);
+        b12.setDisable(false);
+        b13.setDisable(false);
+        b21.setDisable(false);
+        b22.setDisable(false);
+        b23.setDisable(false);
+        b31.setDisable(false);
+        b32.setDisable(false);
+        b33.setDisable(false);  
+        
+        b11.setStyle(null);
+        b12.setStyle(null);
+        b13.setStyle(null);
+        b21.setStyle(null);
+        b22.setStyle(null);
+        b23.setStyle(null);
+        b31.setStyle(null);
+        b32.setStyle(null);
+        b33.setStyle(null);
+        
+        b11.setText("");
+        b12.setText("");
+        b13.setText("");
+        b21.setText("");
+        b22.setText("");
+        b23.setText("");
+        b31.setText("");
+        b32.setText("");
+        b33.setText("");
+        
+        isFirstPlayer = false;
+        shouldMove = false;
+        newGame.setVisible(false);
+        gameDetails.setVisible(false);
+        invite.setVisible(true);
+        inviteMess.setVisible(true);
+        feedBackLabel.setText("Invite oponent !");
+        invitationLabel.setText("");
+        insertOponent.setText("");
         
     }
 }

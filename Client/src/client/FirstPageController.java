@@ -62,12 +62,14 @@ public class FirstPageController implements Initializable {
         else
         {
            emptyField.setVisible(true);
+           warning.setVisible(false);
         }
     }
     
     public void showInvalideUsernamePasswordCombination()
     {
         warning.setVisible(true);
+        emptyField.setVisible(false);
     }
     
     public void cleanUp()

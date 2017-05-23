@@ -134,6 +134,7 @@ public class RegisterPageController implements Initializable {
         passLength.setVisible(false);
         passConfirm.setVisible(false);
         emailCf.setVisible(false);
+        registrationFailed.setVisible(false);
     }
     
 }

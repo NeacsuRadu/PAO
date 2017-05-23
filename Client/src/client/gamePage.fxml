@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -70,32 +71,6 @@
             </Button>
          </children>
       </GridPane>
-      <Label fx:id="lb3" alignment="TOP_RIGHT" layoutX="295.0" layoutY="81.0" text="TURN.">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="lb1" alignment="TOP_RIGHT" layoutX="196.0" layoutY="81.0" text="IT'S ">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="playerTurn" alignment="CENTER" layoutX="215.0" layoutY="81.0" prefHeight="20.0" prefWidth="87.0" text="PLAYER 1">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="usernameLabel" layoutX="43.0" layoutY="36.0" prefHeight="45.0" prefWidth="133.0" text="Jucatorul 1">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="254.0" layoutY="51.0" text="VS" />
-      <Label fx:id="oponentLabel" layoutX="348.0" layoutY="43.0" prefHeight="25.0" prefWidth="150.0" text="Jucatorul 2">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font>
-      </Label>
       <AnchorPane layoutX="637.0" layoutY="-1.0" prefHeight="154.0" prefWidth="172.0" style="-fx-background-color: grey;">
          <children>
             <Label fx:id="gamesPlayed" layoutX="65.0" layoutY="52.0" prefHeight="25.0" prefWidth="80.0" />
@@ -112,14 +87,14 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="invite" layoutX="519.0" layoutY="237.0" prefHeight="79.0" prefWidth="243.0" style="-fx-background-color: grey;">
+      <AnchorPane fx:id="invite" layoutX="534.0" layoutY="256.0" prefHeight="79.0" prefWidth="243.0" style="-fx-background-color: grey;">
          <children>
             <TextField fx:id="insertOponent" layoutX="14.0" layoutY="40.0" promptText="Insert oponent username" />
             <Button fx:id="submitButton" layoutX="171.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickSubmitButton" text="Invite" />
-            <Label fx:id="feedBackLabel" layoutX="28.0" layoutY="8.0" prefHeight="25.0" prefWidth="188.0" text="Invite oponent !" />
+            <Label fx:id="feedBackLabel" layoutX="21.0" layoutY="8.0" prefHeight="25.0" prefWidth="188.0" text="Invite oponent !" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="533.0" layoutY="357.0" prefHeight="110.0" prefWidth="215.0" style="-fx-background-color: grey;">
+      <AnchorPane fx:id="inviteMess" layoutX="548.0" layoutY="392.0" prefHeight="110.0" prefWidth="215.0" style="-fx-background-color: grey;">
          <children>
             <Label layoutX="13.0" layoutY="14.0" prefHeight="21.0" prefWidth="124.0" text="Invitation from:" />
             <Button fx:id="acceptButton" disable="true" layoutX="14.0" layoutY="71.0" mnemonicParsing="false" onAction="#onClickAccept" prefHeight="25.0" prefWidth="56.0" text="Accept" />
@@ -127,6 +102,48 @@
             <Label fx:id="invitationLabel" layoutX="94.0" layoutY="14.0" prefHeight="21.0" prefWidth="102.0" />
          </children>
       </AnchorPane>
-      <Label fx:id="firstPlayerLabel" layoutX="555.0" layoutY="183.0" prefHeight="21.0" prefWidth="172.0" text="You are player..." />
+      <AnchorPane fx:id="gameAnch" layoutX="18.0" layoutY="3.0" prefHeight="103.0" prefWidth="500.0" visible="false">
+         <children>
+            <Label fx:id="usernameLabel" layoutX="23.0" layoutY="19.0" prefHeight="45.0" prefWidth="133.0" text="Jucatorul 1">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="234.0" layoutY="34.0" text="VS" />
+            <Label fx:id="oponentLabel" layoutX="328.0" layoutY="26.0" prefHeight="25.0" prefWidth="150.0" text="Jucatorul 2">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="gameDetails" layoutX="561.0" layoutY="203.0" prefHeight="79.0" prefWidth="188.0" style="-fx-background-color: grey;" visible="false">
+         <children>
+            <Label fx:id="firstPlayerLabel" layoutX="38.0" layoutY="4.0" prefHeight="21.0" prefWidth="124.0" text="You are player...">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="playerTurn" alignment="CENTER" layoutX="9.0" layoutY="55.0" prefHeight="20.0" prefWidth="172.0" text="PLAYER 1 is first.">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="62.0" layoutY="30.0" text="Good luck !">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label fx:id="title" layoutX="142.0" layoutY="24.0" prefHeight="61.0" prefWidth="273.0" text="TIC - TAC - TOE">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </Label>
+      <Button fx:id="newGame" layoutX="590.0" layoutY="348.0" mnemonicParsing="false" onAction="#newgame" prefHeight="32.0" prefWidth="141.0" text="New Game" visible="false" />
    </children>
 </AnchorPane>

@@ -40,7 +40,7 @@
             <VBox layoutX="40.0" layoutY="141.0" prefHeight="266.0" prefWidth="212.0" />
             <AnchorPane layoutX="579.0" layoutY="141.0" prefHeight="239.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="registrationFailed" layoutX="31.0" layoutY="-2.0" prefHeight="32.0" prefWidth="212.0" text="Username or email already taken!" textFill="RED" />
+                  <Label fx:id="registrationFailed" layoutX="22.0" layoutY="126.0" prefHeight="32.0" prefWidth="212.0" text="Username or email already taken!" textFill="RED" />
                   <Label fx:id="emailCf" layoutX="31.0" layoutY="85.0" prefHeight="25.0" prefWidth="126.0" text="Invalid email address." textFill="#ee0909" visible="false" />
                   <Label fx:id="passLength" layoutX="32.0" layoutY="171.0" prefHeight="25.0" prefWidth="192.0" text="Password must be 8 characters." textFill="#e81313" visible="false" />
                   <Label fx:id="passConfirm" layoutX="33.0" layoutY="209.0" prefHeight="25.0" prefWidth="161.0" text="Password doesn't match." textFill="#f20a0a" visible="false" />
