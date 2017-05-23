@@ -151,5 +151,6 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
+      <Label fx:id="responseErrorLabel" layoutX="567.0" layoutY="513.0" prefHeight="21.0" prefWidth="188.0" />
    </children>
 </AnchorPane>

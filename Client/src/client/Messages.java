@@ -21,12 +21,15 @@ public class Messages
     static final public int GAME_MOVE = 5;
     static final public int WAIT_FOR_RESPONSE = 6;
     static final public int UPDATE_USER_DATA = 7;
+    static final public int START_GAME = 8;
     
     static final public int DOES_NOT_EXISTS = 69;
     static final public int IS_NOT_ONLINE = 70;
     static final public int IS_ALREADY_PLAYING = 71;
     static final public int PENDING_RESPONSE = 72;
     static final public int REQUEST = 73;
+    static final public int ALL_GOOD_MAN = 74;
+  
     
     static public String getLoginMessage(String username, String password)
     {
@@ -82,11 +85,10 @@ public class Messages
         return messageJSON.toString();
     }
     
-    static public String getResponseGameRequestMessage(boolean accept, boolean firstPlayer, String username_from, String username_to)
+    static public String getResponseGameRequestMessage(boolean accept, String username_from, String username_to)
     {
         JSONObject messageData = new JSONObject();
         messageData.put("accept", accept);
-        messageData.put("firstplayer", firstPlayer);
         messageData.put("to", username_to);
         messageData.put("from", username_from);
         

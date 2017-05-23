@@ -7,6 +7,7 @@ package com.mycompany.server;
 
 import java.sql.SQLException;
 import java.util.ArrayDeque;
+import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,7 @@ public class MessageHandler implements Runnable
     static final private int GAME_MOVE = 5;
     static final private int WAIT_FOR_RESPONSE = 6;
     static final private int UPDATE_USER_DATA = 7;
+    static final private int START_GAME = 8;
     
     
     static final private int DOES_NOT_EXISTS = 69;
@@ -32,6 +34,7 @@ public class MessageHandler implements Runnable
     static final private int IS_ALREADY_PLAYING = 71;
     static final private int PENDING_RESPONSE = 72;
     static final private int REQUEST = 73;
+    static final private int ALL_GOOD_MAN = 74;
     
     static private MessageHandler instance;
     static public MessageHandler getInstance()
@@ -162,6 +165,25 @@ public class MessageHandler implements Runnable
         
         return message.toString();
     }
+    
+    private String gameStartMessage(int errorCode, boolean firstPlayer, String username)
+    {
+        JSONObject data = new JSONObject();
+        data.put("code", errorCode);
+        data.put("firstplayer", firstPlayer);
+        data.put("username", username);
+        
+        JSONObject message = new JSONObject();
+        message.put("type", START_GAME);
+        message.put("data", data);
+        
+        return message.toString();
+    }
+    
+    private boolean decideFirstPlayer()
+    {     
+        return (new Random().nextInt() == 0);
+    }
 
     private void processTask(MessageTask task)
     {
@@ -258,10 +280,27 @@ public class MessageHandler implements Runnable
                 boolean accept = messageData.getBoolean("accept");
                 if (accept)
                 {
-                    Server.getInstance().setPlayState(username_to, accept);
-                    Server.getInstance().setPlayState(username_from, accept);
+                    if (!Server.getInstance().checkOnlineUser(username_to))
+                    {
+                        Server.getInstance().sendMessage(username_from, gameStartMessage(IS_NOT_ONLINE, true, username_to));
+                    }
+                    else if (Server.getInstance().isUserPlaying(username_to))
+                    {
+                        Server.getInstance().sendMessage(username_from, gameStartMessage(IS_ALREADY_PLAYING, true, username_to));
+                    }
+                    else 
+                    {
+                        Server.getInstance().setPlayState(username_to, accept);
+                        Server.getInstance().setPlayState(username_from, accept);
+                        boolean firstPlayer = decideFirstPlayer();
+                        Server.getInstance().sendMessage(username_from, gameStartMessage(ALL_GOOD_MAN, firstPlayer, username_to));
+                        Server.getInstance().sendMessage(username_to, gameStartMessage(ALL_GOOD_MAN, !firstPlayer, username_from));
+                    }
                 }
-                Server.getInstance().sendMessage(username_to, task.getMessage());
+                else 
+                {
+                    Server.getInstance().sendMessage(username_to, task.getMessage());
+                }
                 
                 break;
             }

@@ -59,6 +59,7 @@ public class GamePageController implements Initializable
     @FXML private Label feedBackLabel;
     @FXML private Label invitationLabel;
     @FXML private Label firstPlayerLabel;
+    @FXML private Label responseErrorLabel;
     @FXML private TextField insertOponent;
     @FXML private Button submitButton;
     @FXML private Button acceptButton;
@@ -328,9 +329,11 @@ public class GamePageController implements Initializable
     
     @FXML public void onClickAccept(ActionEvent event)
     {
+
         inGame = true;
-        acceptButton.setDisable(true);
-        declineButton.setDisable(true);        
+        /*acceptButton.setDisable(true);
+        declineButton.setDisable(true);
+>>>>>>> a8800ff2f31230685dc1078e9a1e6f3f55e7e04b
         isFirstPlayer = decideFirstPlayer();
         shouldMove = isFirstPlayer;
         oponentLabel.setText(invitationLabel.getText());
@@ -348,9 +351,10 @@ public class GamePageController implements Initializable
         else 
         {
             firstPlayerLabel.setText("You are Player2.");
-        }
-        
-        mainController.sendMessage(Messages.getResponseGameRequestMessage(true, !isFirstPlayer, usernameLabel.getText(), invitationLabel.getText()));
+        }*/
+        acceptButton.setDisable(true);
+        declineButton.setDisable(true);
+        mainController.sendMessage(Messages.getResponseGameRequestMessage(true, usernameLabel.getText(), invitationLabel.getText()));
     }
     
     @FXML public void onClickDecline(ActionEvent event)
@@ -358,7 +362,7 @@ public class GamePageController implements Initializable
         acceptButton.setDisable(true);
         declineButton.setDisable(true);
         insertOponent.setText("");
-        mainController.sendMessage(Messages.getResponseGameRequestMessage(false, false, usernameLabel.getText(), invitationLabel.getText()));
+        mainController.sendMessage(Messages.getResponseGameRequestMessage(false, usernameLabel.getText(), invitationLabel.getText()));
     }
     
     public void setFeedbackLabelText(String text)
@@ -366,13 +370,18 @@ public class GamePageController implements Initializable
         feedBackLabel.setText(text);        
     }
     
-    public void responseFromUser(String username, boolean accept, boolean firstPlayer)
+    public void responseFromUser(String username, boolean accept)
     {
         if (accept)
         {
+
             inGame=true;
             
             initGamePage();
+
+            // adica aici. ii curatam butoanele alea, o apelam aici 
+            /* initGamePage();
+>>>>>>> a8800ff2f31230685dc1078e9a1e6f3f55e7e04b
             
             gameAnch.setVisible(true);
             title.setVisible(false);
@@ -390,7 +399,7 @@ public class GamePageController implements Initializable
             else 
             {
                 firstPlayerLabel.setText("You are Player2.");
-            }
+            }*/
         }
         else 
         {
@@ -513,5 +522,34 @@ public class GamePageController implements Initializable
         invitationLabel.setText("");
         insertOponent.setText("");
         title.setVisible(true);
+        responseErrorLabel.setText("");
+    }
+    
+    public void setResponseErrorText(String text)
+    {
+        responseErrorLabel.setText(text);
+    }
+    
+    public void startTheGame(String username, boolean firstPlayer)
+    {
+        initGamePage();
+            
+        gameAnch.setVisible(true);
+        title.setVisible(false);
+        gameDetails.setVisible(true);
+        invite.setVisible(false);
+        inviteMess.setVisible(false);
+        
+        oponentLabel.setText(username);
+        isFirstPlayer = firstPlayer;
+        shouldMove = isFirstPlayer;
+        if (isFirstPlayer)
+        {
+            firstPlayerLabel.setText("You are Player1.");
+        }
+        else 
+        {
+            firstPlayerLabel.setText("You are Player2.");
+        }
     }
 }
