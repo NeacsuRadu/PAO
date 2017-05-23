@@ -50,7 +50,7 @@ public class GamePageController implements Initializable
     @FXML private Label lb1;
     @FXML private Label lb3;
     @FXML private Label user;
-    
+      
     @FXML private Label usernameLabel;
     @FXML private Label oponentLabel;
     @FXML private Label gamesPlayed;
@@ -68,6 +68,8 @@ public class GamePageController implements Initializable
     @FXML private AnchorPane gameDetails;
     @FXML private AnchorPane invite;
     @FXML private AnchorPane inviteMess;
+    @FXML private Label warning;
+    @FXML private Label message;
     
     private boolean isFirstPlayer;
     private boolean shouldMove;
@@ -88,6 +90,8 @@ public class GamePageController implements Initializable
     @FXML
     void onClick(ActionEvent event) 
     {
+        warning.setText("");
+        
         Button clickedButton = (Button) event.getTarget();
         if (!shouldMove || !"".equals(clickedButton.getText()))
             return;
@@ -105,11 +109,19 @@ public class GamePageController implements Initializable
         {
             updateWins();
             newGame.setVisible(true);
+            
+            message.setText("YOU WON !!!!!!");
+            gameDetails.setVisible(false);
+            message.setVisible(true); 
         }
         else if (noWinner())
         {
             updateDraws();
             newGame.setVisible(true);
+            
+            message.setText("It's a draw.");
+            gameDetails.setVisible(false);
+            message.setVisible(true);    
         }
     }
     
@@ -258,8 +270,15 @@ public class GamePageController implements Initializable
     @FXML
     void back(ActionEvent event)
     {
-        mainController.sendMessage(Messages.getLogoutMessage(usernameLabel.getText()));
-        mainController.showFirstPage();
+        if( inGame == false)
+        {
+            mainController.sendMessage(Messages.getLogoutMessage(usernameLabel.getText()));
+            mainController.showFirstPage();
+        }
+        else
+        {
+            warning.setText("You must finish the game.");
+        }
     }
     
     @Override
@@ -296,13 +315,22 @@ public class GamePageController implements Initializable
     
     @FXML public void onClickSubmitButton(ActionEvent event) 
     {
-        mainController.sendMessage(Messages.getRequestGameMessage(usernameLabel.getText(), insertOponent.getText()));
+        if(usernameLabel.getText().equals(insertOponent.getText()))
+        {
+            feedBackLabel.setText("You can't play with yourself bro.");
+            insertOponent.setText("");
+        }
+        else
+        { 
+            mainController.sendMessage(Messages.getRequestGameMessage(usernameLabel.getText(), insertOponent.getText()));
+        }
     }
     
     @FXML public void onClickAccept(ActionEvent event)
     {
+        inGame = true;
         acceptButton.setDisable(true);
-        declineButton.setDisable(true);
+        declineButton.setDisable(true);        
         isFirstPlayer = decideFirstPlayer();
         shouldMove = isFirstPlayer;
         oponentLabel.setText(invitationLabel.getText());
@@ -329,6 +357,7 @@ public class GamePageController implements Initializable
     {
         acceptButton.setDisable(true);
         declineButton.setDisable(true);
+        insertOponent.setText("");
         mainController.sendMessage(Messages.getResponseGameRequestMessage(false, false, usernameLabel.getText(), invitationLabel.getText()));
     }
     
@@ -341,7 +370,8 @@ public class GamePageController implements Initializable
     {
         if (accept)
         {
-            // adica aici. ii curatam butoanele alea, o apelam aici 
+            inGame=true;
+            
             initGamePage();
             
             gameAnch.setVisible(true);
@@ -375,6 +405,10 @@ public class GamePageController implements Initializable
         
         if (heWins)
         {
+            gameDetails.setVisible(false);
+            message.setVisible(true);     
+            message.setText("YOU LOST...");
+            
             updatePlayed();
             newGame.setVisible(true);
             shouldMove = false;
@@ -383,6 +417,11 @@ public class GamePageController implements Initializable
         else if (noWinner())
         {
             updateDraws();
+            
+            gameDetails.setVisible(false);
+            message.setVisible(true); 
+            message.setText("It's a draw.");
+            
             newGame.setVisible(true);
             shouldMove = false;
             return;
@@ -430,7 +469,7 @@ public class GamePageController implements Initializable
                                                                           mainController.getUserData().getNumberOfDraws()));
     }
     
-    private void initGamePage() // in asta setam butoanele pe enabled ca la inceput, le dam la toate acealsi stil, si punem shoudld move si isFirstPlayer pe false :D 
+    private void initGamePage() 
     {
         b11.setDisable(false);
         b12.setDisable(false);
@@ -468,7 +507,7 @@ public class GamePageController implements Initializable
         newGame.setVisible(false);
         gameDetails.setVisible(false);
         invite.setVisible(true);
-        inviteMess.setVisible(true);
+        inviteMess.setVisible(false);
         gameAnch.setVisible(false);
         feedBackLabel.setText("Invite oponent !");
         invitationLabel.setText("");

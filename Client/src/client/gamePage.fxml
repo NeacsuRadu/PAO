@@ -94,7 +94,7 @@
             <Label fx:id="feedBackLabel" layoutX="21.0" layoutY="8.0" prefHeight="25.0" prefWidth="188.0" text="Invite oponent !" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="inviteMess" layoutX="548.0" layoutY="392.0" prefHeight="110.0" prefWidth="215.0" style="-fx-background-color: grey;">
+      <AnchorPane fx:id="inviteMess" layoutX="548.0" layoutY="407.0" prefHeight="110.0" prefWidth="215.0" style="-fx-background-color: grey;">
          <children>
             <Label layoutX="13.0" layoutY="14.0" prefHeight="21.0" prefWidth="124.0" text="Invitation from:" />
             <Button fx:id="acceptButton" disable="true" layoutX="14.0" layoutY="71.0" mnemonicParsing="false" onAction="#onClickAccept" prefHeight="25.0" prefWidth="56.0" text="Accept" />
@@ -129,7 +129,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="62.0" layoutY="30.0" text="Good luck !">
+            <Label fx:id="goodLuck" layoutX="62.0" layoutY="30.0" text="Good luck !">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -145,5 +145,11 @@
          </effect>
       </Label>
       <Button fx:id="newGame" layoutX="590.0" layoutY="348.0" mnemonicParsing="false" onAction="#newgame" prefHeight="32.0" prefWidth="141.0" text="New Game" visible="false" />
+      <Label fx:id="warning" layoutX="641.0" layoutY="153.0" prefHeight="25.0" prefWidth="149.0" textFill="#ee0000" />
+      <Label fx:id="message" layoutX="569.0" layoutY="223.0" prefHeight="61.0" prefWidth="172.0" visible="false">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
