@@ -28,6 +28,18 @@ public class ClientSocket
         this.mainController = mainController;
     }
     
+    public void close()
+    {
+        try
+        {
+            this.socket.close();
+        }
+        catch(IOException ex)
+        {
+            System.out.println("close: " + ex.getMessage());
+        }
+    } 
+    
     public boolean init()
     {
         boolean bRet = true;

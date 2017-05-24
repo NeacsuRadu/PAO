@@ -18,6 +18,7 @@ public class MessageListener implements Runnable
     private Scanner socketScanner;
     private Thread workerThread;
     private MainController controller;
+    private volatile boolean shouldRun = true;
     
     public MessageListener(Scanner sc, MainController mainController)
     {
@@ -26,7 +27,10 @@ public class MessageListener implements Runnable
         this.controller = mainController;
     }
     
-    
+    public void shouldStop()
+    {
+        this.shouldRun = false;
+    }
     
     public void start()
     {
@@ -43,7 +47,7 @@ public class MessageListener implements Runnable
             {
                 line = socketScanner.nextLine();
             }
-            catch(NoSuchElementException | IllegalStateException ex)
+            catch(NoSuchElementException | IllegalStateException  ex)
             {
                 System.out.println("Problem: " + ex.getMessage());
                 line = null;

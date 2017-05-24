@@ -48,7 +48,10 @@ public class Server implements ClientEvents
     public void setPlayState(String username, boolean playState)
     {
         if (users.get(username) == null)
+        {
+            System.out.println("Server setPlayState " + username);
             return;
+        }
         users.get(username).setPlayState(playState);
     }
     
@@ -112,6 +115,18 @@ public class Server implements ClientEvents
             retValue = clients.remove(client);
         }
         System.out.println("retValue is " + retValue);
+        synchronized(users)
+        {
+            if (users.containsValue(client))
+            for (String key : users.keySet())
+            {
+                if (users.get(key) == client)
+                {
+                    users.put(key, null);
+                    break;
+                }
+            }
+        }
     }
     
 }

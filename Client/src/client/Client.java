@@ -89,11 +89,17 @@ public class Client extends Application implements MainController
         if (!initialize())
             return;
         
-        this.primaryStage.setTitle("Fucking tic tac toe");
+        this.primaryStage.setTitle("Best tic tac toe ever");
         this.primaryStage.setResizable(false);
         primaryStage.setScene(firstPageScene);
         firstPageController.cleanUp();
         primaryStage.show();
+    }
+    
+    @Override 
+    public void stop()
+    {
+        clientSocket.close();
     }
     
     @Override

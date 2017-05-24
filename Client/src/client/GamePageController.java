@@ -110,7 +110,6 @@ public class GamePageController implements Initializable
         {
             updateWins();
             newGame.setVisible(true);
-            
             message.setText("YOU WON !!!!!!");
             gameDetails.setVisible(false);
             message.setVisible(true); 
@@ -329,29 +328,6 @@ public class GamePageController implements Initializable
     
     @FXML public void onClickAccept(ActionEvent event)
     {
-
-        inGame = true;
-        /*acceptButton.setDisable(true);
-        declineButton.setDisable(true);
->>>>>>> a8800ff2f31230685dc1078e9a1e6f3f55e7e04b
-        isFirstPlayer = decideFirstPlayer();
-        shouldMove = isFirstPlayer;
-        oponentLabel.setText(invitationLabel.getText());
-        
-        gameAnch.setVisible(true);
-        title.setVisible(false);
-        gameDetails.setVisible(true);
-        invite.setVisible(false);
-        inviteMess.setVisible(false);
-        
-        if (isFirstPlayer)
-        {
-            firstPlayerLabel.setText("You are Player1.");
-        }
-        else 
-        {
-            firstPlayerLabel.setText("You are Player2.");
-        }*/
         acceptButton.setDisable(true);
         declineButton.setDisable(true);
         mainController.sendMessage(Messages.getResponseGameRequestMessage(true, usernameLabel.getText(), invitationLabel.getText()));
@@ -372,36 +348,7 @@ public class GamePageController implements Initializable
     
     public void responseFromUser(String username, boolean accept)
     {
-        if (accept)
-        {
-
-            inGame=true;
-            
-            initGamePage();
-
-            // adica aici. ii curatam butoanele alea, o apelam aici 
-            /* initGamePage();
->>>>>>> a8800ff2f31230685dc1078e9a1e6f3f55e7e04b
-            
-            gameAnch.setVisible(true);
-            title.setVisible(false);
-            gameDetails.setVisible(true);
-            invite.setVisible(false);
-            inviteMess.setVisible(false);
-        
-            oponentLabel.setText(username);
-            isFirstPlayer = firstPlayer;
-            shouldMove = isFirstPlayer;
-            if (isFirstPlayer)
-            {
-                firstPlayerLabel.setText("You are Player1.");
-            }
-            else 
-            {
-                firstPlayerLabel.setText("You are Player2.");
-            }*/
-        }
-        else 
+        if (!accept) 
         {
             feedBackLabel.setText(username + " declined your invitation");
         }
@@ -512,17 +459,22 @@ public class GamePageController implements Initializable
         
         isFirstPlayer = false;
         shouldMove = false;
+        inGame = false;
+        
+        invite.setVisible(true);
+        inviteMess.setVisible(true);
+        title.setVisible(true);
         
         newGame.setVisible(false);
         gameDetails.setVisible(false);
-        invite.setVisible(true);
-        inviteMess.setVisible(false);
         gameAnch.setVisible(false);
+        message.setVisible(false);
+        
         feedBackLabel.setText("Invite oponent !");
         invitationLabel.setText("");
         insertOponent.setText("");
-        title.setVisible(true);
         responseErrorLabel.setText("");
+        message.setText("");
     }
     
     public void setResponseErrorText(String text)
@@ -533,7 +485,9 @@ public class GamePageController implements Initializable
     public void startTheGame(String username, boolean firstPlayer)
     {
         initGamePage();
-            
+        
+        inGame = true;
+        
         gameAnch.setVisible(true);
         title.setVisible(false);
         gameDetails.setVisible(true);
